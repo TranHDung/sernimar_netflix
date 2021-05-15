@@ -1,6 +1,4 @@
-﻿using netflix.wpf.View;
-using netflix.wpf.View.Admin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace netflix.wpf
+namespace netflix.wpf.View.Admin.Template
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Media.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Media : Page
     {
-        public MainWindow()
+        public Media()
         {
             InitializeComponent();
-            _mainFrame.Navigate(new HomePage());
         }
     }
 }

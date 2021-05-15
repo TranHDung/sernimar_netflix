@@ -6,4 +6,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="VỉewModel\General\" />
+    <Folder Include="VỉewModel\Client\" />
+  </ItemGroup>
+
 </Project>

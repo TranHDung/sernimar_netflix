@@ -1,0 +1,45 @@
+﻿<Page x:Class="netflix.wpf.View.Admin.Dashboard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:netflix.wpf.View.Admin" xmlns:admin="clr-namespace:netflix.wpf.VỉewModel.Admin" d:DataContext="{d:DesignInstance Type=admin:DashboardViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Dashboard">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" MinWidth="200px" />
+            <ColumnDefinition Width="8*" />
+        </Grid.ColumnDefinitions>
+        <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1">
+            <StackPanel Margin="20px" >
+                <TextBlock Margin="0px 20px">Hi, Admin</TextBlock>
+                <!--<ListView ItemsSource="{Binding ActionLinks}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="sad">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DisplayName}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>-->
+                <Button>
+                    Quản lí medias
+                </Button>
+                <Button>
+                    Quản lí tài khoản
+                </Button>
+                <Button>
+                    Số liệu thống kê
+                </Button>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
