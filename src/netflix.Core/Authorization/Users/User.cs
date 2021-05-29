@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using Abp.Authorization.Users;
 using Abp.Extensions;
+using netflix.Entities;
 
 namespace netflix.Authorization.Users
 {
     public class User : AbpUser<User>
     {
         public const string DefaultPassword = "123qwe";
-
+        public IEnumerable<Order> Orders { get; set; }
+        public int? UserTypeId { get; set; }
+        public UserType UserType { get; set; }
+        public IEnumerable<Profile> Profiles { get; set; }
         public static string CreateRandomPassword()
         {
             return Guid.NewGuid().ToString("N").Truncate(16);
