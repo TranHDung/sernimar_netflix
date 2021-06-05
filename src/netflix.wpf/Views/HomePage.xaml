@@ -9,8 +9,8 @@
       Title="HomePage">
 
     <StackPanel>
-        <Button Width="100px" Click="Button_Click">Admin Page</Button>
-        <Button Width="100px" Click="Button_Click_1">Login Page (Trang khach)</Button>
+
+        <Button Width="100px" Click="Button_Click_1">Admin Page</Button>
         <Button Width="100px" Click="Button_Click_2">User Page (Trang nguoi dung)</Button>
     </StackPanel>
 </Page>

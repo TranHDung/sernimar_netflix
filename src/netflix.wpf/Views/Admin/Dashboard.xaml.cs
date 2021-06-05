@@ -57,5 +57,11 @@ namespace netflix.wpf.View.Admin
             };
             return ctx;
         }
+
+        private void goToAccountPage(object sender, RoutedEventArgs e)
+        {
+            var accPage = new AccountManagerView();
+            NavigationService.Navigate(accPage);
+        }
     }
 }

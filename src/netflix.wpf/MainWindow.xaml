@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:netflix.wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Netflix 2.0 - The new level of movie" Height="720px" Width="1080px">
 
     <Grid>
         <DockPanel>
