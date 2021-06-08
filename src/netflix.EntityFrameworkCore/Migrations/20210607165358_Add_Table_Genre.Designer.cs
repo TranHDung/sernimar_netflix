@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using netflix.EntityFrameworkCore;
 
 namespace netflix.Migrations
 {
     [DbContext(typeof(netflixDbContext))]
-    partial class netflixDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210607165358_Add_Table_Genre")]
+    partial class Add_Table_Genre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
