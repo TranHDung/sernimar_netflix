@@ -16,9 +16,17 @@ namespace netflix.ApiGenre
         {
             _genreRepository = genreRepository;
         }
-        public async Task Add(Genre genre)
+        public async Task Add(GenreDto genre)
         {
-            await _genreRepository.InsertAsync(genre)
+            var entity = ObjectMapper.Map<Genre>(genre);
+            await _genreRepository.InsertAsync(entity);
+        }
+
+        public async Task<List<GenreDto>> GetAll()
+        {
+            var entities = await _genreRepository.GetAllListAsync();
+            var dtos = ObjectMapper.Map<List<GenreDto>>(entities);
+            return dtos;
         }
     }
 }

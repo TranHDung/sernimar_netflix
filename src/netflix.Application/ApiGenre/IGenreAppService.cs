@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using netflix.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace netflix.ApiGenre
 {
     public interface IGenreAppService : IApplicationService
     {
-        public Task Add(Genre genre);
+        public Task Add(GenreDto genre);
+        public Task<List<GenreDto>> GetAll();
     }
 }

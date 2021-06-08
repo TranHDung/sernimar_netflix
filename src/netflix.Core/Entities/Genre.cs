@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace netflix.Entities
 {
+    [AutoMapper]
     public class Genre : Entity
     {
         public int Name { get; set; }
