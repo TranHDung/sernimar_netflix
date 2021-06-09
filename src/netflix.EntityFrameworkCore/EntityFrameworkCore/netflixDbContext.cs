@@ -16,6 +16,7 @@ namespace netflix.EntityFrameworkCore
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
+        public virtual DbSet<Genre> Genres { get; set; }
         public netflixDbContext(DbContextOptions<netflixDbContext> options)
             : base(options)
         {
