@@ -18,7 +18,7 @@ namespace netflix.ApiGenre
         }
         public async Task Add(Genre genre)
         {
-            await _genreRepository.InsertAsync(genre)
+            await _genreRepository.InsertAsync(genre);
         }
     }
 }

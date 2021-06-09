@@ -75,7 +75,6 @@ namespace netflix.Web.Host.Startup
                         .AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials()
                 )
             );
 
