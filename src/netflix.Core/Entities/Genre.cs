@@ -10,7 +10,7 @@ namespace netflix.Entities
     [AutoMapper]
     public class Genre : Entity
     {
-        public int Name { get; set; }
+        public string Name { get; set; }
         public List<Media> Medias { get; set; }
         public DateTime CreatedDate { get; set; }
     }
