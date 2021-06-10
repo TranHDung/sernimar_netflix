@@ -32,5 +32,11 @@ namespace netflix.wpf.Views.Admin
             var orderHistoryPage = new OrderHistoryView(user);
             NavigationService.Navigate(orderHistoryPage);
         }
+        private void EditUser(object sender, RoutedEventArgs e)
+        {
+            var user =(User)((Button)sender).Tag;
+            var editAccountView = new EditAccountView(user);
+            NavigationService.Navigate(editAccountView);
+        }
     }
 }

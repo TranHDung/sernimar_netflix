@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace netflix.wpf.ViewModel.Admin
@@ -41,10 +42,24 @@ namespace netflix.wpf.ViewModel.Admin
         }
 
         void deleteUser()
-        {
+        {   
             var x = Users.ToList();
-            x.RemoveAll(i => i.Selected == true);
-            Users = new ObservableCollection<SelectableItem<User>>(x);
+            var selectedCount = x.Where(i => i.Selected == true).ToList().Count;
+
+            if(selectedCount > 0)
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Xóa " + selectedCount + " tài khoản?", "Xóa tài khoản", MessageBoxButton.YesNoCancel);
+                if(messageBoxResult == MessageBoxResult.Yes)
+                {
+                    x.RemoveAll(i => i.Selected == true);
+                    Users = new ObservableCollection<SelectableItem<User>>(x);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn tài khoản cần xóa");
+            }
+
         }
 
         public ObservableCollection<SelectableItem<User>> Users

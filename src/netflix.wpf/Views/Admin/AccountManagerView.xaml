@@ -18,10 +18,8 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Margin="5px 0px">+ Thêm tài khoản</Button>
-        <Button Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteUserCommand}">- Xóa tài khoản</Button>
-        <Button Grid.Column="2" Margin="5px 0px">- Chỉnh sửa</Button>
-        <Button Grid.Column="3" Margin="5px 0px">- Khóa tài khoản</Button>
+        <Button Grid.Column="0" Margin="5px 0px" Click="EditUser">+ Thêm tài khoản</Button>
+        <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteUserCommand}">- Xóa tài khoản</Button>
 
         <DataGrid Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding Users}" AutoGenerateColumns="False" >
             <DataGrid.RowStyle>
@@ -72,10 +70,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Lịch sử thanh toán" Width="SizeToCells">
+                <DataGridTemplateColumn Header="Thao tác" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding User}"  Click="OrderHistory" Content="👀 Xem lịch sử" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                            <WrapPanel>
+                                <Button Margin="5px" ToolTip="Xem lịch sử thanh toán" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding User}"  Click="OrderHistory" Content="👀" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                                <Button Margin="5px" ToolTip="Chỉnh sửa thông tin tài khoản" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding User}"  Click="EditUser" Content="✎" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                            </WrapPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
