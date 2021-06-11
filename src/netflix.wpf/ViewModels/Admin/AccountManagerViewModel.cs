@@ -3,10 +3,12 @@ using netflix.Entities;
 using netflix.wpf.Command;
 using netflix.wpf.Models;
 using netflix.wpf.VỉewModel;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +21,7 @@ namespace netflix.wpf.ViewModel.Admin
         private ObservableCollection<Selectable<User>> users;
         private ObservableCollection<UserType> types;
         private ObservableCollection<Profile> profiles;
+        private ObservableCollection<Genre> genres;
         private ICommand deleteUserCommand;
 
         public ICommand DeleteUserCommand
@@ -81,6 +84,24 @@ namespace netflix.wpf.ViewModel.Admin
             set
             {
                 profiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Genre> Genres
+        {
+            get
+            {
+                var client = new RestClient("http://example.com");
+                var request = new RestRequest("resource/{id}");
+                var response = client.Post(request);
+                var content = response.Content;
+                var _genre = client.Post<List<Genre>>(request);
+                return null;
+            }
+            set
+            {
+                genres = value;
                 OnPropertyChanged();
             }
         }
