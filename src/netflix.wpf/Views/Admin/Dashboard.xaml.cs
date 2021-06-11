@@ -64,5 +64,10 @@ namespace netflix.wpf.View.Admin
             var accPage = new AccountManagerView();
             NavigationService.Navigate(accPage);
         }
+        private void goToMediaPage(object sender, RoutedEventArgs e)
+        {
+            var media = new MediaManagerView();
+            NavigationService.Navigate(media);
+        }
     }
 }

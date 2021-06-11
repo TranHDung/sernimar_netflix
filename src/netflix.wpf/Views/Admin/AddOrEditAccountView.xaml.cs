@@ -20,12 +20,12 @@ namespace netflix.wpf.Views.Admin
     /// <summary>
     /// Interaction logic for EditAccountView.xaml
     /// </summary>
-    public partial class EditAccountView : Page
+    public partial class AddOrEditAccountView : Page
     {
-        public EditAccountView(User user)
+        public AddOrEditAccountView(User user)
         {
             InitializeComponent();
-            this.DataContext = new AddOrEditAccountViewModel(user);
+            DataContext = new AddOrEditAccountViewModel(user);
         }
 
         private void Cancel(object sender, RoutedEventArgs e)

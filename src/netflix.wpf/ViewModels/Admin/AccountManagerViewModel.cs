@@ -1,6 +1,7 @@
 ﻿using netflix.Authorization.Users;
 using netflix.Entities;
 using netflix.wpf.Command;
+using netflix.wpf.Models;
 using netflix.wpf.VỉewModel;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace netflix.wpf.ViewModel.Admin
 {
     public class AccountManagerViewModel: BaseViewModel
     {
-        private ObservableCollection<SelectableItem<User>> users;
+        private ObservableCollection<Selectable<User>> users;
         private ObservableCollection<UserType> types;
         private ObservableCollection<Profile> profiles;
         private ICommand deleteUserCommand;
@@ -33,7 +34,7 @@ namespace netflix.wpf.ViewModel.Admin
             }
         }
 
-        private List<SelectableItem<User>> getSelectedItems()
+        private List<Selectable<User>> getSelectedItems()
         {
             return users.Where(i => i.Selected = true).ToList();
         }
@@ -49,7 +50,7 @@ namespace netflix.wpf.ViewModel.Admin
                 if(messageBoxResult == MessageBoxResult.Yes)
                 {
                     x.RemoveAll(i => i.Selected == true);
-                    Users = new ObservableCollection<SelectableItem<User>>(x);
+                    Users = new ObservableCollection<Selectable<User>>(x);
                 }
             }
             else
@@ -59,7 +60,7 @@ namespace netflix.wpf.ViewModel.Admin
 
         }
 
-        public ObservableCollection<SelectableItem<User>> Users
+        public ObservableCollection<Selectable<User>> Users
         {
             get => users;
             set
@@ -87,12 +88,12 @@ namespace netflix.wpf.ViewModel.Admin
         public AccountManagerViewModel()
         {
             //dummies
-            var _users = new ObservableCollection<SelectableItem<User>>();
+            var _users = new ObservableCollection<Selectable<User>>();
             for (int i=0; i<=10; i++)
             {
 
-                var user = new SelectableItem<User>();
-                user.User = new User
+                var user = new Selectable<User>();
+                user.Item = new User
                 {
                     Id = i,
                     UserTypeId = 1,
@@ -116,11 +117,6 @@ namespace netflix.wpf.ViewModel.Admin
             }
             Users = _users;
         }
-    }
-    public class SelectableItem<T>
-    {
-        public T User { get;set; }
-        public bool Selected { get;set; }
     }
 }
 

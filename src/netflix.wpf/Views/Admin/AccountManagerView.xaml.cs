@@ -35,7 +35,7 @@ namespace netflix.wpf.Views.Admin
         private void EditUser(object sender, RoutedEventArgs e)
         {
             var user =(User)((Button)sender).Tag;
-            var editAccountView = new EditAccountView(user);
+            var editAccountView = new AddOrEditAccountView(user);
             NavigationService.Navigate(editAccountView);
         }
     }

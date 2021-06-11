@@ -1,11 +1,11 @@
-﻿<Page x:Class="netflix.wpf.Views.Admin.AccountManagerView"
+﻿<Page x:Class="netflix.wpf.Views.Admin.MediaManagerView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:netflix.wpf.Views.Admin"
+      xmlns:local="clr-namespace:netflix.wpf.Views.Admin" xmlns:admin="clr-namespace:netflix.wpf.ViewModels.Admin" d:DataContext="{d:DesignInstance Type=admin:MediaManagerViewModel}"
       mc:Ignorable="d" 
-      Title="AccountManagerView">
+      Title="MediaManagerView">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -19,11 +19,11 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Margin="5px 0px" FontWeight="Bold" VerticalAlignment="Center" FontSize="18px">Quản lí tài khoản</TextBlock>
-        <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="EditUser">+ Thêm tài khoản</Button>
-        <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteUserCommand}">- Xóa tài khoản</Button>
+        <TextBlock Margin="5px 0px" FontWeight="Bold" VerticalAlignment="Center" FontSize="18px">Quản lí Media</TextBlock>
+        <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="AddMedia">+ Thêm Media</Button>
+        <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteMediaCommand}">- Xóa Media</Button>
 
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Users}" AutoGenerateColumns="False" >
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Medias}" AutoGenerateColumns="False" >
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
@@ -50,55 +50,38 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn  Header="Username" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Item.UserName">
+                <DataGridTemplateColumn Header="Tên" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Item.Name">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Item.UserName}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            </TextBlock>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.Name}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Tên đầy đủ" Width="SizeToCells" CanUserSort="True" SortMemberPath="Item.Name">
+                <DataGridTemplateColumn Header="Tên lưu trên server" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Item.RawName">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Item.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.RawName}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Email thanh toán" Width="SizeToCells" CanUserSort="True" SortMemberPath="Item.EmailAddress">
+                <DataGridTemplateColumn Header="IMDB Link" Width="SizeToCells" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Item.EmailAddress}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.IBDMLink}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Thao tác" Width="SizeToCells">
+                <DataGridTemplateColumn Header="Rating" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Item.IBDMLink">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <WrapPanel>
-                                <Button Margin="5px" ToolTip="Xem lịch sử thanh toán" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding User}"  Click="OrderHistory" Content="👀" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
-                                <Button Margin="5px" ToolTip="Chỉnh sửa thông tin tài khoản" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding User}"  Click="EditUser" Content="✎" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
-                            </WrapPanel>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.IBDMLink}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Danh sách profile" Width="SizeToCells" IsReadOnly="True">
+                <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Item.CreatedDate" Header="Ngày tạo" Width="SizeToCells" IsReadOnly="True" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ListBox ItemsSource="{Binding Item.Profiles}">
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border BorderThickness="1" BorderBrush="Black" Padding="5" CornerRadius="5">
-                                            <TextBlock Text="{Binding Name, StringFormat={} 📒 {0}}"></TextBlock>
-                                        </Border>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.CreatedDate}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
