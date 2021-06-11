@@ -24,11 +24,10 @@ namespace netflix.ApiGenre
             await _genreRepository.InsertAsync(entity);
         }
 
-        public async Task<List<GenreDto>> GetAll()
+        public async Task<List<Genre>> GetAll()
         {
             var entities = await _genreRepository.GetAllListAsync();
-            var dtos = ObjectMapper.Map<List<GenreDto>>(entities);
-            return dtos;
+            return entities;
         }
     }
 }

@@ -91,12 +91,10 @@ namespace netflix.wpf.ViewModel.Admin
         {
             get
             {
-                var client = new RestClient("http://example.com");
-                var request = new RestRequest("resource/{id}");
-                var response = client.Post(request);
-                var content = response.Content;
-                var _genre = client.Post<List<Genre>>(request);
-                return null;
+                var client = new RestClient("https://localhost:44391");
+                var request = new RestRequest("api/services/app/Genre/GetAll");
+                var _genre = client.Post<ObservableCollection<Genre>>(request).Data;
+                return _genre;
             }
             set
             {

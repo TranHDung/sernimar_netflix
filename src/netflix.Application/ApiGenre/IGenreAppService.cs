@@ -11,6 +11,6 @@ namespace netflix.ApiGenre
     public interface IGenreAppService : IApplicationService
     {
         public Task Add(GenreDto genre);
-        public Task<List<GenreDto>> GetAll();
+        public Task<List<Genre>> GetAll();
     }
 }
