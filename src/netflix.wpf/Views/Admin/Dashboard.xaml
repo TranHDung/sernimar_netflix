@@ -24,7 +24,7 @@
         </Style>
     </Page.Resources>
     <StackPanel>
-        <TextBlock Margin="5px 5px" FontWeight="Bold" FontSize="20px">Công cụ quản lí</TextBlock>
+        <TextBlock Margin="5px 5px" FontWeight="Bold" FontSize="18px">Công cụ quản lí</TextBlock>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
@@ -37,7 +37,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Button Margin="5px 0px" Grid.Column="0" Click="goToAccountPage">🔐 Quản lí tài khoản</Button>
-            <Button Margin="5px 0px" Grid.Column="1">🎬 Quản lí media</Button>
+            <Button Margin="5px 0px" Grid.Column="1" Click="goToMediaPage">🎬 Quản lí media</Button>
             <Button Margin="5px 0px" Grid.Column="2">📊 Số liệu thống kê</Button>
             <Button Style="{StaticResource MaterialDesignFlatLightBgButton}" Margin="5px 0px" Grid.Column="3">Đăng xuất</Button>
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="22px">

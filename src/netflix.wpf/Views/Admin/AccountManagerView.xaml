@@ -9,7 +9,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80" Name="d" />
+            <RowDefinition Height="20" Name="d" />
+            <RowDefinition Height="80" Name="dd" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,10 +19,11 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Margin="5px 0px" Click="EditUser">+ Thêm tài khoản</Button>
-        <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteUserCommand}">- Xóa tài khoản</Button>
+        <TextBlock Margin="5px 0px" FontWeight="Bold" VerticalAlignment="Center" FontSize="18px">Quản lí tài khoản</TextBlock>
+        <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="EditUser">+ Thêm tài khoản</Button>
+        <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteUserCommand}">- Xóa tài khoản</Button>
 
-        <DataGrid Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding Users}" AutoGenerateColumns="False" >
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Users}" AutoGenerateColumns="False" >
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
@@ -44,29 +46,29 @@
                 <DataGridTemplateColumn Header="Id" Width="SizeToCells" IsReadOnly="True" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding User.Id}"></TextBlock>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.Id}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn  Header="Username" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="User.UserName">
+                <DataGridTemplateColumn  Header="Username" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Item.UserName">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding User.UserName}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Item.UserName}" HorizontalAlignment="Center" VerticalAlignment="Center">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Tên đầy đủ" Width="SizeToCells" CanUserSort="True" SortMemberPath="User.Name">
+                <DataGridTemplateColumn Header="Tên đầy đủ" Width="SizeToCells" CanUserSort="True" SortMemberPath="Item.Name">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding User.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{Binding Item.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Email thanh toán" Width="SizeToCells" CanUserSort="True" SortMemberPath="User.EmailAddress">
+                <DataGridTemplateColumn Header="Email thanh toán" Width="SizeToCells" CanUserSort="True" SortMemberPath="Item.EmailAddress">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding User.EmailAddress}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{Binding Item.EmailAddress}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -83,7 +85,7 @@
                 <DataGridTemplateColumn Header="Danh sách profile" Width="SizeToCells" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ListBox ItemsSource="{Binding User.Profiles}">
+                            <ListBox ItemsSource="{Binding Item.Profiles}">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Horizontal"/>

@@ -1,4 +1,4 @@
-﻿using netflix.Authorization.Users;
+﻿using netflix.Entities;
 using netflix.wpf.ViewModels.Admin;
 using System;
 using System.Collections.Generic;
@@ -18,14 +18,14 @@ using System.Windows.Shapes;
 namespace netflix.wpf.Views.Admin
 {
     /// <summary>
-    /// Interaction logic for EditAccountView.xaml
+    /// Interaction logic for AddOrEditMediaView.xaml
     /// </summary>
-    public partial class EditAccountView : Page
+    public partial class AddOrEditMediaView : Page
     {
-        public EditAccountView(User user)
+        public AddOrEditMediaView(Media media)
         {
             InitializeComponent();
-            this.DataContext = new AddOrEditAccountViewModel(user);
+            this.DataContext = new AddOrEditMediaViewModel(media);
         }
 
         private void Cancel(object sender, RoutedEventArgs e)
