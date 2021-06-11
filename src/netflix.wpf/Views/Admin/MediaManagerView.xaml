@@ -20,7 +20,7 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <TextBlock Margin="5px 0px" FontWeight="Bold" VerticalAlignment="Center" FontSize="18px">Quản lí Media</TextBlock>
-        <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="AddMedia">+ Thêm Media</Button>
+        <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="AddOrEditMedia">+ Thêm Media</Button>
         <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteMediaCommand}">- Xóa Media</Button>
 
         <DataGrid Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Medias}" AutoGenerateColumns="False" >
@@ -82,6 +82,22 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.CreatedDate}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Item.CreatedDate" Header="Mô tả" Width="SizeToCells" IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.Description}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Thao tác" Width="SizeToCells">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <Button Margin="5px" ToolTip="Chỉnh sửa thông tin Media" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding Item}"  Click="AddOrEditMedia" Content="✎" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                            </WrapPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

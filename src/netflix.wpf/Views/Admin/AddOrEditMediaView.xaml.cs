@@ -18,22 +18,19 @@ using System.Windows.Shapes;
 namespace netflix.wpf.Views.Admin
 {
     /// <summary>
-    /// Interaction logic for MediaManagerView.xaml
+    /// Interaction logic for AddOrEditMediaView.xaml
     /// </summary>
-    public partial class MediaManagerView : Page
+    public partial class AddOrEditMediaView : Page
     {
-        public MediaManagerView()
+        public AddOrEditMediaView(Media media)
         {
             InitializeComponent();
-            this.DataContext = new MediaManagerViewModel();
+            this.DataContext = new AddOrEditMediaViewModel(media);
         }
 
-        private void AddOrEditMedia(object sender, RoutedEventArgs e)
+        private void Cancel(object sender, RoutedEventArgs e)
         {
-            // goto add media page
-            var media = (Media)((Button)sender).Tag;
-            var orderHistoryPage = new AddOrEditMediaView(media);
-            NavigationService.Navigate(orderHistoryPage);
+            NavigationService.GoBack();
         }
     }
 }
