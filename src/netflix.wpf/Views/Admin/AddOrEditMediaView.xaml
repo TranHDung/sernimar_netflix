@@ -20,20 +20,35 @@
                         <RowDefinition Height="100" />
                         <RowDefinition Height="100" />
                         <RowDefinition Height="100" />
+                        <RowDefinition Height="200" />
+                        <RowDefinition Height="100" />
                     </Grid.RowDefinitions>
-                    <StackPanel Margin="15 5">
+                    <StackPanel Grid.Row="0" Margin="15 5">
+                        <TextBlock Style="{StaticResource MaterialDesignTextBlock}">IMDB Link</TextBlock>
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding Media.IBDMLink}" />
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1">
+                        <Button Style="{StaticResource MaterialDesignFlatLightBgButton}" ToolTip ="Lấy thông tin từ IMDB">⟳ Lấy thông tin</Button>
+                    </StackPanel>
+                    <StackPanel Grid.Column="0" Grid.Row="1" Margin="15 5">
                         <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Tên media</TextBlock>
                         <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding Media.Name}" />
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="15 5">
+                    <StackPanel Grid.Column="1" Grid.Row="1"  Margin="15 5">
                         <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Mô tả</TextBlock>
                         <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding Media.Description}" />
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Margin="15 5">
-                        <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Email</TextBlock>
-                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding Media.IBDMLink}" />
+                    <StackPanel Grid.Column="0" Grid.Row="2"  Margin="15 5">
+                        <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Đường dẫn file</TextBlock>
+                        <TextBox IsEnabled="False" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding FileName}" />
                     </StackPanel>
-                    <WrapPanel FlowDirection="RightToLeft" Grid.Row="2" Grid.Column="2" Margin="15 5">
+                    <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Button Style="{StaticResource MaterialDesignFlatLightBgButton}" ToolTip ="Chọn file từ ổ cứng" Command="{Binding SelectFile}">📁 Chọn file</Button>
+                    </StackPanel>
+                    <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
+                        <MediaElement LoadedBehavior="Play" MaxHeight="200" MaxWidth="400" Source="{Binding FileName}"></MediaElement>
+                    </StackPanel>
+                    <WrapPanel FlowDirection="RightToLeft" Grid.Row="4" Grid.Column="2" Margin="15 5">
                         <Button Margin="10px" Command="{Binding SaveChange}">Xác nhận</Button>
                         <Button Style="{StaticResource MaterialDesignFlatButton}" Click="Cancel">Hủy</Button>
                     </WrapPanel>
