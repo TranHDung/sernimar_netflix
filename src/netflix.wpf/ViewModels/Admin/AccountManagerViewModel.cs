@@ -23,7 +23,16 @@ namespace netflix.wpf.ViewModel.Admin
         private ObservableCollection<Profile> profiles;
         private ObservableCollection<Genre> genres;
         private ICommand deleteUserCommand;
-
+        private ICommand submitSearchCommand;
+        private string searchString;
+        public string SearchString
+        {
+            get => searchString;
+            set
+            {
+                searchString = value;
+            }
+        }
         public ICommand DeleteUserCommand
         {
             get
@@ -37,10 +46,29 @@ namespace netflix.wpf.ViewModel.Admin
             }
         }
 
-        private List<Selectable<User>> getSelectedItems()
+        public ICommand SubmitSearchCommand
         {
-            return users.Where(i => i.Selected = true).ToList();
+            get
+            {
+                if (submitSearchCommand == null)
+                {
+                    submitSearchCommand = new RelayCommand(
+                       p => true, p => submitSearch());
+                }
+                return submitSearchCommand;
+            }
         }
+
+
+        private void submitSearch()
+        {
+            if(SearchString is not null)
+            {
+                // get search data
+            }
+
+        }
+
 
         void deleteUser()
         {   
@@ -112,6 +140,13 @@ namespace netflix.wpf.ViewModel.Admin
         public AccountManagerViewModel()
         {
             //dummies
+
+            //test
+            var client = new RestClient("https://localhost:44391");
+            var request = new RestRequest("api/services/app/Genre/GetAll");
+            var _genre = client.Post<List<Genre>>(request).Data;
+            //test
+
             var _users = new ObservableCollection<Selectable<User>>();
             for (int i=0; i<=10; i++)
             {
@@ -133,7 +168,6 @@ namespace netflix.wpf.ViewModel.Admin
                             Name = "profile 1",
                         },
                     },
-                    
                     Name = "Ten day du cua user nay " + i,
                 };
                 user.Selected = false;
