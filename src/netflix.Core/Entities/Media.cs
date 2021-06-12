@@ -18,5 +18,6 @@ namespace netflix.Entities
         public IEnumerable<Action> Actions { get; set; }
         public int GenreId { get; set; }
         public Genre Genre { get; set; }
+        public int ImdbRating { get; set; }
     }
 }
