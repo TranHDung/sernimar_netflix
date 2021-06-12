@@ -15,8 +15,47 @@ namespace netflix.wpf.ViewModels.Admin
     public class MediaManagerViewModel : BaseViewModel
     {
         private List<Selectable<Media>> medias;
+        private ICommand submitSearchCommand;
         private ICommand deleteMediaCommand;
-
+        private DateTime fromCreatedDate;
+        private DateTime toCreatedDate;
+        private string searchString;
+        public string SearchString
+        {
+            get => searchString;
+            set
+            {
+                searchString = value;
+            }
+        }
+        public DateTime FromCreatedDate
+        {
+            get => toCreatedDate;
+            set
+            {
+                toCreatedDate = value;
+            }
+        }
+        public DateTime ToCreatedDate
+        {
+            get => fromCreatedDate;
+            set
+            {
+                fromCreatedDate = value;
+            }
+        }
+        public ICommand SubmitSearchCommand
+        {
+            get
+            {
+                if (submitSearchCommand == null)
+                {
+                    submitSearchCommand = new RelayCommand(
+                       p => true, p => submitSearch());
+                }
+                return submitSearchCommand;
+            }
+        }
         public ICommand DeleteMediaCommand
         {
             get
@@ -28,6 +67,11 @@ namespace netflix.wpf.ViewModels.Admin
                 }
                 return deleteMediaCommand;
             }
+        }
+        private void submitSearch()
+        {
+            // call api here
+            var x = 1;
         }
         void deleteMedia()
         {
@@ -61,6 +105,8 @@ namespace netflix.wpf.ViewModels.Admin
         public MediaManagerViewModel()
         {
             //dummies
+            FromCreatedDate = DateTime.Today.AddYears(-1);
+            ToCreatedDate = DateTime.Today;
             var _medias = new List<Selectable<Media>>();
             for (int i = 0; i <= 10; i++)
             {
@@ -75,6 +121,11 @@ namespace netflix.wpf.ViewModels.Admin
                     Description = "300 bộ phim thiếu nhi huyển thoại đây, mại dô mại dô!!!",
                     IBDMLink = "https://www.imdb.com/title/tt8721424/",
                     Type = "Movie",
+                    ImdbRating = 5,
+                    Genre = new Genre()
+                    {
+                        Name="Kinh dị"
+                    }
                 };
                 media.Selected = false;
                 _medias.Add(media);

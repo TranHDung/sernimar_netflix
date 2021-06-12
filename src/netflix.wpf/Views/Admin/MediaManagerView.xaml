@@ -22,7 +22,22 @@
         <TextBlock Margin="5px 0px" FontWeight="Bold" VerticalAlignment="Center" FontSize="18px">Quản lí Media</TextBlock>
         <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="AddOrEditMedia">+ Thêm Media</Button>
         <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteMediaCommand}">- Xóa Media</Button>
-
+        <WrapPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <TextBox Text="{Binding SearchString}" Height="40" MinWidth="180px" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="5 0">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding SubmitSearchCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <StackPanel Margin="5 0" Width="100">
+                <TextBlock>Từ ngày</TextBlock>
+                <DatePicker SelectedDate="{Binding FromCreatedDate}"/>
+            </StackPanel>
+            <StackPanel Margin="5 0" Width="100">
+                <TextBlock>Đến ngày</TextBlock>
+                <DatePicker SelectedDate="{Binding ToCreatedDate}"/>
+            </StackPanel>
+            <Button Margin="5 0" Style="{StaticResource MaterialDesignIconButton}" Command="{Binding SubmitSearchCommand}">🔎︎</Button>
+        </WrapPanel>
         <DataGrid Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Medias}" AutoGenerateColumns="False" >
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
@@ -71,10 +86,17 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Rating" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Item.IBDMLink">
+                <DataGridTemplateColumn Header="Rating" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Item.ImdbRating">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.IBDMLink}"></TextBlock>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.ImdbRating, StringFormat={}{0}/10⭐}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Thể loại" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Item.Genre.Name">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.Genre.Name}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

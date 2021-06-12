@@ -9,8 +9,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20" Name="d" />
-            <RowDefinition Height="80" Name="dd" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="80" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,7 +22,14 @@
         <TextBlock Margin="5px 0px" FontWeight="Bold" VerticalAlignment="Center" FontSize="18px">Quản lí tài khoản</TextBlock>
         <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="EditUser">+ Thêm tài khoản</Button>
         <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteUserCommand}">- Xóa tài khoản</Button>
-
+        <WrapPanel Grid.Row="1" Grid.Column="3" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBox MinWidth="180" Height="40" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Text="{Binding SearchString, Mode=TwoWay}">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding SubmitSearchCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <Button Margin="5px 0px" Style="{StaticResource MaterialDesignIconButton}" Command="{Binding SubmitSearchCommand}">🔎︎</Button>
+        </WrapPanel>
         <DataGrid Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Users}" AutoGenerateColumns="False" >
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
@@ -76,8 +83,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <WrapPanel>
-                                <Button Margin="5px" ToolTip="Xem lịch sử thanh toán" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding User}"  Click="OrderHistory" Content="👀" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
-                                <Button Margin="5px" ToolTip="Chỉnh sửa thông tin tài khoản" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding User}"  Click="EditUser" Content="✎" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                                <Button Margin="5px" ToolTip="Xem lịch sử thanh toán" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding Item}"  Click="OrderHistory" Content="👀" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                                <Button Margin="5px" ToolTip="Chỉnh sửa thông tin tài khoản" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding Item}"  Click="EditUser" Content="✎" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
                             </WrapPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

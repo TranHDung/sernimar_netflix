@@ -83,6 +83,7 @@ namespace netflix.wpf.ViewModels.Admin
 
         private void saveToDb()
         {
+            //https://stackoverflow.com/questions/35478663/upload-file-without-multipart-form-data-using-restsharp
             if (IsAdd)
             {
                 // call add api
