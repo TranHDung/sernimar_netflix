@@ -94,8 +94,13 @@ namespace netflix.wpf.ViewModel.Admin
             {
                 var client = new RestClient("https://localhost:44391");
                 var request = new RestRequest("api/services/app/Genre/GetAll");
-                var _genre = client.Post<ObservableCollection<Genre>>(request).Data;
-                return _genre;
+                var data = client.Post<ApiResponse<Genre>>(request).Data;
+                var _genres = new ObservableCollection<Genre>();
+                foreach (var item in data.result)
+                {
+                    _genres.Add(item);
+                }
+                return _genres;
             }
             set
             {
