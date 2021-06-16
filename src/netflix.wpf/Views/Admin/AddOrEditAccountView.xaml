@@ -23,19 +23,19 @@
                     </Grid.RowDefinitions>
                     <StackPanel Margin="15 5">
                         <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Username</TextBlock>
-                        <TextBox IsEnabled="{Binding IsAdd}" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding User.UserName}" />
+                        <TextBox IsEnabled="{Binding IsAdd}" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding User.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="15 5">
                         <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Họ và tên</TextBlock>
-                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding User.Name}" />
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding User.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Margin="15 5">
                         <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Email</TextBlock>
-                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding User.EmailAddress}" />
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding User.EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Margin="15 5">
-                        <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Email thanh toán</TextBlock>
-                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding User.EmailAddress}" />
+                        <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Mật khẩu</TextBlock>
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" FontSize="14" Text="{Binding User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <WrapPanel FlowDirection="RightToLeft" Grid.Row="2" Grid.Column="2" Margin="15 5">
                         <Button Margin="10px" Command="{Binding SaveChange}">Xác nhận</Button>

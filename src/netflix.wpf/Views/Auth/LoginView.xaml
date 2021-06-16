@@ -1,0 +1,21 @@
+﻿<Page x:Class="netflix.wpf.Views.Auth.LoginView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:netflix.wpf.Views.Auth" xmlns:auth="clr-namespace:netflix.wpf.ViewModels.Auth" d:DataContext="{d:DesignInstance Type=auth:LoginViewModel}"
+      mc:Ignorable="d" 
+      Title="LoginView">
+
+    <Grid>
+        <TextBlock>Login view</TextBlock>
+        <StackPanel>
+            <TextBlock>Username</TextBlock>
+            <TextBox Text="{Binding User.UserNameOrEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock Text=":" />
+            <TextBlock>Password</TextBlock>
+            <TextBox Text="{Binding User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Button Command="{Binding Login}">Login</Button>
+        </StackPanel>
+    </Grid>
+</Page>

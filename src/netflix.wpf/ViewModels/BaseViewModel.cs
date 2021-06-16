@@ -1,4 +1,5 @@
 ﻿using netflix.wpf.Interface;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,22 @@ namespace netflix.wpf.VỉewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        protected T getData<T>(string url)
+        {
+            var client = new RestClient("https://localhost:44391");
+            var request = new RestRequest(url);
+            var data = client.Get<T>(request).Data;
+            return data;
+        }
+        protected T postData<T>(string url, object payload)
+        {
+            var client = new RestClient("https://localhost:44391");
+            var request = new RestRequest(url);
+            request.AddJsonBody(payload);
+            var data = client.Post<T>(request).Data;
+            var x = client.Post<T>(request);
+            return data;
         }
     }
 }

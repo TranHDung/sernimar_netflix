@@ -18,10 +18,10 @@ namespace netflix.wpf.ViewModel.Admin
 {
     public class AccountManagerViewModel: BaseViewModel
     {
-        private ObservableCollection<Selectable<User>> users;
-        private ObservableCollection<UserType> types;
-        private ObservableCollection<Profile> profiles;
-        private ObservableCollection<Genre> genres;
+        private List<Selectable<User>> users;
+        private List<UserType> types;
+        private List<Profile> profiles;
+        private List<Genre> genres;
         private ICommand deleteUserCommand;
         private ICommand submitSearchCommand;
         private string searchString;
@@ -81,7 +81,7 @@ namespace netflix.wpf.ViewModel.Admin
                 if(messageBoxResult == MessageBoxResult.Yes)
                 {
                     x.RemoveAll(i => i.Selected == true);
-                    Users = new ObservableCollection<Selectable<User>>(x);
+                    Users = new List<Selectable<User>>(x);
                 }
             }
             else
@@ -91,7 +91,7 @@ namespace netflix.wpf.ViewModel.Admin
 
         }
 
-        public ObservableCollection<Selectable<User>> Users
+        public List<Selectable<User>> Users
         {
             get => users;
             set
@@ -101,12 +101,12 @@ namespace netflix.wpf.ViewModel.Admin
             }
         }
                 
-        public ObservableCollection<UserType> Types
+        public List<UserType> Types
         {
             get => types;
         }
                 
-        public ObservableCollection<Profile> Profiles
+        public List<Profile> Profiles
         {
             get => profiles;
             set
@@ -116,19 +116,11 @@ namespace netflix.wpf.ViewModel.Admin
             }
         }
 
-        public ObservableCollection<Genre> Genres
+        public List<Genre> Genres
         {
             get
             {
-                var client = new RestClient("https://localhost:44391");
-                var request = new RestRequest("api/services/app/Genre/GetAll");
-                var data = client.Post<ApiResponse<Genre>>(request).Data;
-                var _genres = new ObservableCollection<Genre>();
-                foreach (var item in data.result)
-                {
-                    _genres.Add(item);
-                }
-                return _genres;
+                return genres;
             }
             set
             {
@@ -137,43 +129,20 @@ namespace netflix.wpf.ViewModel.Admin
             }
         }
 
+        private List<User> getAllUser()
+        {
+            var _users = getData<List<User>>("/api/services/app/User/GetAll");
+            return _users;
+        }
+
         public AccountManagerViewModel()
         {
-            //dummies
-
-            //test
-            var client = new RestClient("https://localhost:44391");
-            var request = new RestRequest("api/services/app/Genre/GetAll");
-            var _genre = client.Post<List<Genre>>(request).Data;
-            //test
-
-            var _users = new ObservableCollection<Selectable<User>>();
-            for (int i=0; i<=10; i++)
+            var selectableUser = getAllUser().Select(i => new Selectable<User>()
             {
-
-                var user = new Selectable<User>();
-                user.Item = new User
-                {
-                    Id = i,
-                    UserTypeId = 1,
-                    UserName = "username" + i,
-                    Profiles = new List<Profile>() 
-                    { 
-                        new Profile()
-                        {
-                            Name = "profile 1",
-                        },
-                        new Profile()
-                        {
-                            Name = "profile 1",
-                        },
-                    },
-                    Name = "Ten day du cua user nay " + i,
-                };
-                user.Selected = false;
-                _users.Add(user);
-            }
-            Users = _users;
+                Item = i,
+                Selected = false,
+            }).ToList();
+            Users = selectableUser;
         }
     }
 }

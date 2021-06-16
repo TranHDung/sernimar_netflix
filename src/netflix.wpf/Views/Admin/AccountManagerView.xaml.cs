@@ -31,7 +31,7 @@ namespace netflix.wpf.Views.Admin
             var user =(User)((Button)sender).Tag;
             var orderHistoryPage = new OrderHistoryView(user);
             NavigationService.Navigate(orderHistoryPage);
-        }
+        } 
         private void EditUser(object sender, RoutedEventArgs e)
         {
             var user =(User)((Button)sender).Tag;

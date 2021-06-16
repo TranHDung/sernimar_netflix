@@ -32,8 +32,10 @@ namespace netflix.wpf.ViewModels.Admin
 
         private void saveToDb()
         {
+            var xx = User;
             if (IsAdd)
             {
+                var createdtUser = postData<User>("/api/services/app/User/Create", User);
                 // call add api
                 var x = 1;
             }
@@ -58,6 +60,7 @@ namespace netflix.wpf.ViewModels.Admin
             User = user;
             if (user is null)
             {
+                User = new User();
                 IsAdd = true;
                 PageTitle = "Thêm mới tài khoản";
             }

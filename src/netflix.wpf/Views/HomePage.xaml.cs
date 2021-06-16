@@ -1,5 +1,6 @@
 ﻿using netflix.wpf.View.Admin;
 using netflix.wpf.VỉewModel;
+using netflix.wpf.Views.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,8 @@ namespace netflix.wpf.View
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var dashboard = new Dashboard(); // Thay bang trang Dang Nhap
-            this.NavigationService.Navigate(dashboard);
+            var auth = new LoginView(); // Thay bang trang Dang Nhap
+            this.NavigationService.Navigate(auth);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

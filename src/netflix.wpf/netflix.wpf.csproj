@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\netflix.Core\netflix.Core.csproj" />
+    <ProjectReference Include="..\netflix.Web.Core\netflix.Web.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -65,14 +65,14 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Tên đầy đủ" Width="SizeToCells" CanUserSort="True" SortMemberPath="Item.Name">
+                <DataGridTemplateColumn Header="Tên đầy đủ" Width="SizeToCells" CanUserSort="True" SortMemberPath="Item.FullName">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Item.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{Binding Item.FullName}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Email thanh toán" Width="SizeToCells" CanUserSort="True" SortMemberPath="Item.EmailAddress">
+                <DataGridTemplateColumn Header="Email" Width="SizeToCells" CanUserSort="True" SortMemberPath="Item.EmailAddress">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Item.EmailAddress}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
