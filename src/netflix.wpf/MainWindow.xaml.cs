@@ -1,5 +1,6 @@
 ﻿using netflix.wpf.View;
 using netflix.wpf.View.Admin;
+using netflix.wpf.Views.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace netflix.wpf
         public MainWindow()
         {
             InitializeComponent();
-            _mainFrame.Navigate(new HomePage());
+            _mainFrame.Navigate(new LoginView());
         }
     }
 }

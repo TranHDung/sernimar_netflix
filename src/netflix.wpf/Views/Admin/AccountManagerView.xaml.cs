@@ -1,4 +1,5 @@
 ﻿using netflix.Authorization.Users;
+using netflix.Users.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +29,13 @@ namespace netflix.wpf.Views.Admin
         }
         private void OrderHistory(object sender, RoutedEventArgs e)
         {
-            var user =(User)((Button)sender).Tag;
+            var user =(UserDto)((Button)sender).Tag;
             var orderHistoryPage = new OrderHistoryView(user);
             NavigationService.Navigate(orderHistoryPage);
         } 
         private void EditUser(object sender, RoutedEventArgs e)
         {
-            var user =(User)((Button)sender).Tag;
+            var user =(UserDto)((Button)sender).Tag;
             var editAccountView = new AddOrEditAccountView(user);
             NavigationService.Navigate(editAccountView);
         }

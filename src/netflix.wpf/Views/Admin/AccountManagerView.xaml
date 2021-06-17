@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:netflix.wpf.Views.Admin"
+      xmlns:local="clr-namespace:netflix.wpf.Views.Admin" xmlns:admin="clr-namespace:netflix.wpf.ViewModel.Admin" d:DataContext="{d:DesignInstance Type=admin:AccountManagerViewModel}"
       mc:Ignorable="d" 
       Title="AccountManagerView">
 
@@ -22,25 +22,16 @@
         <TextBlock Margin="5px 0px" FontWeight="Bold" VerticalAlignment="Center" FontSize="18px">Quản lí tài khoản</TextBlock>
         <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="EditUser">+ Thêm tài khoản</Button>
         <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteUserCommand}">- Xóa tài khoản</Button>
-        <WrapPanel Grid.Row="1" Grid.Column="3" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <WrapPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="10" HorizontalAlignment="Right"  VerticalAlignment="Center">
+            <Button Command="{Binding ReloadCommand}" FontSize="22" Style="{StaticResource MaterialDesignIconButton}" Margin="5px 0px">⟳</Button>
             <TextBox MinWidth="180" Height="40" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Text="{Binding SearchString, Mode=TwoWay}">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SubmitSearchCommand}"/>
                 </TextBox.InputBindings>
             </TextBox>
-            <Button Margin="5px 0px" Style="{StaticResource MaterialDesignIconButton}" Command="{Binding SubmitSearchCommand}">🔎︎</Button>
+            <Button Margin="5px 0px" Command="{Binding SubmitSearchCommand}">🔎︎</Button>
         </WrapPanel>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Users}" AutoGenerateColumns="False" >
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Selected}" Value="True">
-                            <Setter Property="Background" Value="LightGray" />
-                            <Setter Property="Foreground" Value="Black" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.RowStyle>
+        <DataGrid CanUserAddRows="False" Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Users}" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Header="Chọn" Binding="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <DataGridCheckBoxColumn.CellStyle>
@@ -79,6 +70,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Quyền hạn" Width="SizeToCells" CanUserSort="True" SortMemberPath="Item.RoleNames[0]">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Item.RoleNames[0]}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Thao tác" Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -86,26 +84,6 @@
                                 <Button Margin="5px" ToolTip="Xem lịch sử thanh toán" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding Item}"  Click="OrderHistory" Content="👀" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
                                 <Button Margin="5px" ToolTip="Chỉnh sửa thông tin tài khoản" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding Item}"  Click="EditUser" Content="✎" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
                             </WrapPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Danh sách profile" Width="SizeToCells" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ListBox ItemsSource="{Binding Item.Profiles}">
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border BorderThickness="1" BorderBrush="Black" Padding="5" CornerRadius="5">
-                                            <TextBlock Text="{Binding Name, StringFormat={} 📒 {0}}"></TextBlock>
-                                        </Border>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

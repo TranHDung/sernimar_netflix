@@ -1,4 +1,6 @@
-﻿using netflix.wpf.ViewModels.Auth;
+﻿using netflix.wpf.View.Admin;
+using netflix.wpf.ViewModels.Auth;
+using netflix.wpf.Views.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,19 @@ namespace netflix.wpf.Views.Auth
         public LoginView()
         {
             InitializeComponent();
-            this.DataContext = new LoginViewModel();
+            DataContext = new LoginViewModel();
+
+        }
+
+        private void GoToHomePage(object sender, RoutedEventArgs e)
+        {
+            var db = new ClientIndexView();
+            NavigationService.Navigate(db);
+        }
+        private void GoToAdminPage(object sender, RoutedEventArgs e)
+        {
+            var db = new Dashboard();
+            NavigationService.Navigate(db);
         }
     }
 }

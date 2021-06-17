@@ -1,5 +1,6 @@
 ﻿using netflix.Authorization.Users;
 using netflix.Entities;
+using netflix.Users.Dto;
 using netflix.wpf.VỉewModel;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace netflix.wpf.ViewModels.Admin
     public class OrderHistoryViewModel: BaseViewModel
     {
         private List<Order> orders;
-        private User user;
+        private bool isEmty;
+        private UserDto user;
 
         public List<Order> Orders
         {
@@ -24,8 +26,17 @@ namespace netflix.wpf.ViewModels.Admin
                 OnPropertyChanged();
             }
         }
+        public bool IsEmpty
+        {
+            get => isEmty;
+            set
+            {
+                isEmty = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public User User
+        public UserDto User
         {
             get => user;
             set
@@ -35,24 +46,21 @@ namespace netflix.wpf.ViewModels.Admin
             }
         }
 
-        public OrderHistoryViewModel(User user)
+        private void getInitData()
+        {
+            var Orders = getData<List<Order>>("/api/services/app/Order/GetByUserId?userId="+User.Id);
+            if(Orders is null || Orders.Count == 0)
+            {
+                IsEmpty = true;
+            }
+        }
+
+        public OrderHistoryViewModel(UserDto user)
         {
             User = user;
+            getInitData();
             // get user's order history by userId
             // dummies
-            var l = new List<Order>();
-            for(int i = 0; i<=5; i++)
-            {
-                var history = new Order()
-                {
-                    Id = i,
-                    CreatedDate = DateTime.Today.AddDays(-i),
-                    ExpireDate = DateTime.Today.AddDays(-i),
-                    Price = 1 * 10000,
-                };
-                l.Add(history);
-            }
-            orders = l;
         }
 
     }

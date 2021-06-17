@@ -1,6 +1,8 @@
 ﻿using netflix.Authorization.Users;
 using netflix.Entities;
+using netflix.Users.Dto;
 using netflix.wpf.Command;
+using netflix.wpf.Helpers;
 using netflix.wpf.Models;
 using netflix.wpf.VỉewModel;
 using RestSharp;
@@ -18,11 +20,12 @@ namespace netflix.wpf.ViewModel.Admin
 {
     public class AccountManagerViewModel: BaseViewModel
     {
-        private List<Selectable<User>> users;
+        private List<Selectable<UserDto>> users;
         private List<UserType> types;
         private List<Profile> profiles;
         private List<Genre> genres;
         private ICommand deleteUserCommand;
+        private ICommand reloadCommand;
         private ICommand submitSearchCommand;
         private string searchString;
         public string SearchString
@@ -43,6 +46,18 @@ namespace netflix.wpf.ViewModel.Admin
                        p => true, p => deleteUser());
                 }
                 return deleteUserCommand;
+            }
+        }
+        public ICommand ReloadCommand
+        {
+            get
+            {
+                if (reloadCommand == null)
+                {
+                    reloadCommand = new RelayCommand(
+                       p => true, p => getAllUser());
+                }
+                return reloadCommand;
             }
         }
 
@@ -73,15 +88,18 @@ namespace netflix.wpf.ViewModel.Admin
         void deleteUser()
         {   
             var x = Users.ToList();
-            var selectedCount = x.Where(i => i.Selected == true).ToList().Count;
+            var selectedUsers = x.Where(i => i.Selected == true).ToList();
 
-            if(selectedCount > 0)
+            if(selectedUsers.Count > 0)
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Xóa " + selectedCount + " tài khoản?", "Xóa tài khoản", MessageBoxButton.YesNoCancel);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Xóa " + selectedUsers.Count + " tài khoản?", "Xóa tài khoản", MessageBoxButton.YesNoCancel);
                 if(messageBoxResult == MessageBoxResult.Yes)
                 {
-                    x.RemoveAll(i => i.Selected == true);
-                    Users = new List<Selectable<User>>(x);
+                    selectedUsers.ForEach(u =>
+                    {
+                        DeleteData("https://localhost:44391/api/services/app/User/Delete?Id=" + u.Item.Id);
+                    });
+                    getAllUser();
                 }
             }
             else
@@ -91,7 +109,7 @@ namespace netflix.wpf.ViewModel.Admin
 
         }
 
-        public List<Selectable<User>> Users
+        public List<Selectable<UserDto>> Users
         {
             get => users;
             set
@@ -129,20 +147,20 @@ namespace netflix.wpf.ViewModel.Admin
             }
         }
 
-        private List<User> getAllUser()
+        private void getAllUser()
         {
-            var _users = getData<List<User>>("/api/services/app/User/GetAll");
-            return _users;
-        }
-
-        public AccountManagerViewModel()
-        {
-            var selectableUser = getAllUser().Select(i => new Selectable<User>()
+            var _users = getData<PagedResultDto<UserDto>>("/api/services/app/User/GetAll");
+            var selectableUser = _users.Items.Select(i => new Selectable<UserDto>()
             {
                 Item = i,
                 Selected = false,
             }).ToList();
             Users = selectableUser;
+        }
+
+        public AccountManagerViewModel()
+        {
+            getAllUser();
         }
     }
 }

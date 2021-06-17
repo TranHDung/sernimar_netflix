@@ -1,5 +1,6 @@
 ﻿using netflix.wpf.VỉewModel.Admin;
 using netflix.wpf.Views.Admin;
+using netflix.wpf.Views.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace netflix.wpf.View.Admin
         public Dashboard()
         {
             InitializeComponent();
+            //NavigationService.bac();
             DataContext = sampleData();
         }
         private DashboardViewModel sampleData()
@@ -68,6 +70,14 @@ namespace netflix.wpf.View.Admin
         {
             var media = new MediaManagerView();
             NavigationService.Navigate(media);
+        }
+
+        private void Logout(object sender, RoutedEventArgs e)
+        {
+            var page = new LoginView();
+            NavigationService.Navigate(page);
+            NavigationService.RemoveBackEntry();
+
         }
     }
 }

@@ -6,16 +6,20 @@
       xmlns:local="clr-namespace:netflix.wpf.Views.Auth" xmlns:auth="clr-namespace:netflix.wpf.ViewModels.Auth" d:DataContext="{d:DesignInstance Type=auth:LoginViewModel}"
       mc:Ignorable="d" 
       Title="LoginView">
-
-    <Grid>
-        <TextBlock>Login view</TextBlock>
-        <StackPanel>
-            <TextBlock>Username</TextBlock>
-            <TextBox Text="{Binding User.UserNameOrEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+    </Page.Resources>
+    <StackPanel>
+        <StackPanel x:Name="loginForm">
+            <TextBlock Visibility="{Binding IsLoggedIn, Converter={StaticResource InverseBoolToVisConverter}}">Username</TextBlock>
+            <TextBox Visibility="{Binding IsLoggedIn, Converter={StaticResource InverseBoolToVisConverter}}" Text="{Binding AuthData.UserNameOrEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBlock Text=":" />
-            <TextBlock>Password</TextBlock>
-            <TextBox Text="{Binding User.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <Button Command="{Binding Login}">Login</Button>
+            <TextBlock Visibility="{Binding IsLoggedIn, Converter={StaticResource InverseBoolToVisConverter}}">Password</TextBlock>
+            <TextBox Visibility="{Binding IsLoggedIn, Converter={StaticResource InverseBoolToVisConverter}}" Text="{Binding AuthData.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Button Visibility="{Binding IsLoggedIn, Converter={StaticResource InverseBoolToVisConverter}}" Command="{Binding Login}">Login</Button>
+            <TextBlock Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}">Da dang nhap thanh cong</TextBlock>
+            <Button Visibility="{Binding IsAdminUser, Converter={StaticResource BoolToVisConverter}}" Click="GoToAdminPage">Vào trang quản trị</Button>
+            <Button Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisConverter}}" Click="GoToHomePage">Về trang chủ</Button>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Page>

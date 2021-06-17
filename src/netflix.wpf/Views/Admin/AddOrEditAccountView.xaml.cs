@@ -1,4 +1,5 @@
 ﻿using netflix.Authorization.Users;
+using netflix.Users.Dto;
 using netflix.wpf.ViewModels.Admin;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace netflix.wpf.Views.Admin
     /// </summary>
     public partial class AddOrEditAccountView : Page
     {
-        public AddOrEditAccountView(User user)
+        public AddOrEditAccountView(UserDto user)
         {
             InitializeComponent();
             DataContext = new AddOrEditAccountViewModel(user);

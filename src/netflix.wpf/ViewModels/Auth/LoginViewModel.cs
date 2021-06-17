@@ -1,20 +1,38 @@
 ﻿using netflix.Authorization.Users;
 using netflix.Models.TokenAuth;
+using netflix.Users.Dto;
 using netflix.wpf.Command;
+using netflix.wpf.Models;
 using netflix.wpf.VỉewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace netflix.wpf.ViewModels.Auth
 {
     public class LoginViewModel: BaseViewModel
     {
-        private AuthenticateModel user;
+        private AuthenticateModel authData;
+        public UserDto User { get; set; }
+        private bool isLoggedIn;
+        private bool isAdminUser;
         private ICommand login;
+        public bool IsLoggedIn
+        {
+            get => isLoggedIn;
+            set
+            {
+                isLoggedIn = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool IsAdminUser
+        {
+            get => isAdminUser;
+            set
+            {
+                isAdminUser = value;
+                OnPropertyChanged();
+            }
+        }
         public ICommand Login
         {
             get
@@ -29,20 +47,37 @@ namespace netflix.wpf.ViewModels.Auth
         }
         private void submitLogin()
         {
-            var authData = this.postData<AuthenticateResultModel>("/api/TokenAuth/Authenticate", User);
-            var x = 1;
+            var result = postData<AuthenticateResultModel>("/api/TokenAuth/Authenticate", AuthData);
+            if (result is null)
+            {
+                System.Windows.MessageBox.Show("Tài khoản hoặc mật khẩu không đúng");
+            }
+            else
+            {
+                AuthToken.setAccessToken(result.AccessToken);
+                User = getData<UserDto>("/api/services/app/User/Get?Id=" + result.UserId);
+                IsLoggedIn = true;
+                if (User.RoleNames[0] == "ADMIN")
+                {
+                    IsAdminUser = true;
+                }
+            }
         }
-        public AuthenticateModel User
+        public AuthenticateModel AuthData
         {
-            get => user;
+            get => authData;
             set
             {
-                user = value;
+                authData = value;
+                OnPropertyChanged();
             }
         }
         public LoginViewModel()
         {
-
+            AuthData = new AuthenticateModel();
+            User = new UserDto();
+            IsLoggedIn = false;
+            IsAdminUser = false;
         }
     }
 }
