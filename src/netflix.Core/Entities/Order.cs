@@ -10,9 +10,9 @@ namespace netflix.Entities
 {
     public class Order : Entity
     {
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public User User { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public DateTime ExpireDate { get; set; }
         public DateTime CreatedDate { get; set; }
     }
