@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services;
 using Microsoft.AspNetCore.Http;
+using netflix.ApiMedia.Dto;
 using netflix.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace netflix.ApiGenre
         public Task<int> Add(Media genre);
         public Task<List<Media>> GetAll();
         public Task<bool> UploadMedia(IFormFile file, int mediaId);
-        public Task DeleteMedia(int mediaId);
+        public Task Delete(int mediaId);
+        public Task<List<Media>> Search(MediaSearchDto search);
     }
 }

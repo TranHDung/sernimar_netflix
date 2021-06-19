@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using netflix.Entities;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using netflix.ApiMedia.Dto;
+using System.Net.Http;
+using HtmlAgilityPack;
 
 namespace netflix.ApiGenre
 {
@@ -23,7 +26,7 @@ namespace netflix.ApiGenre
             return await _mediaRepository.InsertAndGetIdAsync(entity);
         }
 
-        public async Task DeleteMedia(int mediaId)
+        public async Task Delete(int mediaId)
         {
             var media = _mediaRepository.FirstOrDefault(m => m.Id == mediaId);
             await _mediaRepository.DeleteAsync(media);
@@ -33,6 +36,30 @@ namespace netflix.ApiGenre
         {
             var entities = await _mediaRepository.GetAllListAsync();
             return entities;
+        }
+
+        public async Task<List<Media>> Search(MediaSearchDto search)
+        {
+            var query = _mediaRepository.GetAll();
+
+            if (!string.IsNullOrWhiteSpace(search.Name))
+            {
+                query = query.Where(q => q.Name.Contains(search.Name));
+            }
+            if (search.GenreId > 0)
+            {
+                query = query.Where(q => q.GenreId == search.GenreId);
+            }
+            if (search.FromCreatedDate != null)
+            {
+                query = query.Where(q => q.CreatedDate > search.FromCreatedDate);
+            }
+            if (search.ToCreatedDate != null)
+            {
+                query = query.Where(q => q.CreatedDate > search.ToCreatedDate);
+            }
+
+            return query.ToList();
         }
 
         public async Task<bool> UploadMedia(IFormFile file, int mediaId)
@@ -55,6 +82,23 @@ namespace netflix.ApiGenre
                 return true;
             }
             return false;
+        }
+
+        public async Task<IMDBInfo> GetInfoFromIMDB(string IMDBLink)
+        {
+            var httpClient = new HttpClient();
+
+            var html = await httpClient.GetStringAsync(IMDBLink);
+
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            var rating = doc.QuerySelector(".ratingValue span").InnerText;
+            var description = doc.QuerySelector(".plot_summary .summary_text").InnerText;
+            return new IMDBInfo 
+            {
+                Rating = rating,
+                Description = description
+            };
         }
     }
 }
