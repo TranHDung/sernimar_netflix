@@ -19,5 +19,6 @@ namespace netflix.Entities
         public int GenreId { get; set; }
         public Genre Genre { get; set; }
         public int ImdbRating { get; set; }
+        public string FilePath { get; set; }
     }
 }
