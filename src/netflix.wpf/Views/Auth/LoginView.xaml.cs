@@ -27,7 +27,6 @@ namespace netflix.wpf.Views.Auth
         {
             InitializeComponent();
             DataContext = new LoginViewModel();
-
         }
 
         private void GoToHomePage(object sender, RoutedEventArgs e)
