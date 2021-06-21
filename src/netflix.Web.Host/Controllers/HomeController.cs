@@ -6,21 +6,41 @@ using Abp.Notifications;
 using Abp.Timing;
 using Abp.Web.Security.AntiForgery;
 using netflix.Controllers;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.Extensions.Hosting;
 
 namespace netflix.Web.Host.Controllers
 {
     public class HomeController : netflixControllerBase
     {
         private readonly INotificationPublisher _notificationPublisher;
+        private readonly IHostingEnvironment _env;
 
-        public HomeController(INotificationPublisher notificationPublisher)
+        public HomeController(INotificationPublisher notificationPublisher, IHostingEnvironment env)
         {
             _notificationPublisher = notificationPublisher;
+            _env = env;
         }
 
         public IActionResult Index()
         {
             return Redirect("/swagger");
+        }
+
+        public async Task<ActionResult> UploadMedia([FromForm] IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\video", fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
         }
 
         /// <summary>
