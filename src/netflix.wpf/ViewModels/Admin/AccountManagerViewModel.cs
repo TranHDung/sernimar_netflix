@@ -97,7 +97,7 @@ namespace netflix.wpf.ViewModel.Admin
                 {
                     selectedUsers.ForEach(u =>
                     {
-                        DeleteData("https://localhost:44391/api/services/app/User/Delete?Id=" + u.Item.Id);
+                        DeleteData("/api/services/app/User/Delete?Id=" + u.Item.Id);
                     });
                     getAllUser();
                 }

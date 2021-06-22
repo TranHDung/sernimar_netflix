@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20" Name="d" />
             <RowDefinition Height="80" Name="dd" />
+            <RowDefinition Height="70" Name="sdd" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,23 +23,40 @@
         <TextBlock Margin="5px 0px" FontWeight="Bold" VerticalAlignment="Center" FontSize="18px">Quản lí Media</TextBlock>
         <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="AddOrEditMedia">+ Thêm Media</Button>
         <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteMediaCommand}">- Xóa Media</Button>
-        <WrapPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right">
-            <TextBox Text="{Binding SearchString}" Height="40" MinWidth="180px" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="5 0">
+        <Border BorderThickness="0 1" BorderBrush="CadetBlue" Padding="12" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" >
+            <WrapPanel HorizontalAlignment="Center">
+            <TextBox Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" MinWidth="250px" FontSize="14" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="5 0">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SubmitSearchCommand}"/>
                 </TextBox.InputBindings>
             </TextBox>
-            <StackPanel Margin="5 0" Width="100">
+
+            <StackPanel Margin="15 0" Width="150">
+                <TextBlock>Thể loại</TextBlock>
+                <ComboBox 
+                    ItemsSource="{Binding Genres}"                                  
+                    IsSynchronizedWithCurrentItem="True" 
+                    SelectedItem="{Binding SelectedGenre, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Margin="15 0" Width="150">
                 <TextBlock>Từ ngày</TextBlock>
                 <DatePicker SelectedDate="{Binding FromCreatedDate}"/>
             </StackPanel>
-            <StackPanel Margin="5 0" Width="100">
+            <StackPanel Margin="15 0" Width="150">
                 <TextBlock>Đến ngày</TextBlock>
                 <DatePicker SelectedDate="{Binding ToCreatedDate}"/>
             </StackPanel>
-            <Button Margin="5 0" Style="{StaticResource MaterialDesignIconButton}" Command="{Binding SubmitSearchCommand}">🔎︎</Button>
+            <Button Margin="15 0" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Command="{Binding SubmitSearchCommand}">🔎︎ Tìm kiếm</Button>
         </WrapPanel>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Medias}" AutoGenerateColumns="False" >
+        </Border>
+
+        <DataGrid Grid.Row="3" Grid.ColumnSpan="4" ItemsSource="{Binding Medias}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>

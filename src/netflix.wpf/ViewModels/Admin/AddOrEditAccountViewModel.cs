@@ -148,7 +148,7 @@ namespace netflix.wpf.ViewModels.Admin
             }
             else
             {
-                SelectedRole = Roles.First(i => i.NormalizedName == User.RoleNames[0]); // 3 la role nguoi dung thuong
+                SelectedRole = Roles.First(i => i.NormalizedName == User.RoleNames[0]); // mac dinh la role dau tien
             }
         }
         public CreateUserDto User
@@ -162,6 +162,7 @@ namespace netflix.wpf.ViewModels.Admin
         }
         public AddOrEditAccountViewModel(UserDto user)
         {
+            getInitData();
 
             IsSuccessed = false;
             if (user is null)
@@ -176,7 +177,6 @@ namespace netflix.wpf.ViewModels.Admin
                 PageTitle = "Chỉnh sửa tài khoản";
                 IsAdd = false;
             }
-            getInitData();
 
         }
     }

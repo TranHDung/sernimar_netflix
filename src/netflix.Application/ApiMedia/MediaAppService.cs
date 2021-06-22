@@ -23,7 +23,17 @@ namespace netflix.ApiGenre
         }
         public async Task<int> Add(Media entity)
         {
-            return await _mediaRepository.InsertAndGetIdAsync(entity);
+            entity.CreatedDate = DateTime.Now;
+            int result = 0;
+            try
+            {
+                result = await _mediaRepository.InsertAndGetIdAsync(entity);
+            }
+            catch(Exception ex)
+            {
+                var x = ex;
+            }
+            return result;
         }
 
         public async Task Delete(int mediaId)
@@ -66,20 +76,27 @@ namespace netflix.ApiGenre
         {
             if (file != null && file.Length > 0)
             {
-                var fileName = Path.GetFileName(file.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\video", fileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                try
                 {
-                    await file.CopyToAsync(fileStream);
+                    var fileName = Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\video", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    var media = _mediaRepository.FirstOrDefault(m => m.Id == mediaId);
+                    if (media == null)
+                    {
+                        return false;
+                    }
+                    media.FilePath = filePath;
+                    _mediaRepository.Update(media);
+                    return true;
                 }
-                var media = _mediaRepository.FirstOrDefault(m => m.Id == mediaId);
-                if (media == null)
+                catch(Exception ex)
                 {
-                    return false;
+                    var z = 1;
                 }
-                media.FilePath = filePath;
-                _mediaRepository.Update(media);
-                return true;
             }
             return false;
         }
@@ -92,8 +109,8 @@ namespace netflix.ApiGenre
 
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
-            var rating = doc.QuerySelector(".ratingValue span").InnerText;
-            var description = doc.QuerySelector(".plot_summary .summary_text").InnerText;
+            var rating = doc.QuerySelector(".ratingValue span")?.InnerText;
+            var description = doc.QuerySelector(".plot_summary .summary_text")?.InnerText;
             return new IMDBInfo 
             {
                 Rating = rating,
