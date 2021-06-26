@@ -39,5 +39,10 @@ namespace netflix.wpf.Views.Auth
             var db = new Dashboard();
             NavigationService.Navigate(db);
         }
+
+        private void OpenForgetPassTab(object sender, RoutedEventArgs e)
+        {
+            mainTab.TabIndex = 3;
+        }
     }
 }

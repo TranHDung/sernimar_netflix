@@ -162,7 +162,6 @@ namespace netflix.wpf.ViewModels.Admin
         }
         public AddOrEditAccountViewModel(UserDto user)
         {
-            getInitData();
 
             IsSuccessed = false;
             if (user is null)
@@ -177,6 +176,7 @@ namespace netflix.wpf.ViewModels.Admin
                 PageTitle = "Chỉnh sửa tài khoản";
                 IsAdd = false;
             }
+            getInitData();
 
         }
     }
