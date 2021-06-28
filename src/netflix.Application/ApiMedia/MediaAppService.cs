@@ -111,10 +111,12 @@ namespace netflix.ApiGenre
             doc.LoadHtml(html);
             var rating = doc.QuerySelector(".ratingValue span")?.InnerText;
             var description = doc.QuerySelector(".plot_summary .summary_text")?.InnerText;
+            var name = doc.QuerySelector(".titleBar .title_wrapper h1")?.InnerText; ;
             return new IMDBInfo 
             {
-                Rating = rating,
-                Description = description
+                Rating = double.Parse(rating),
+                Description = description,
+                Name = name
             };
         }
     }
