@@ -114,7 +114,7 @@ namespace netflix.wpf.ViewModels.Admin
             {
                 _temp.Description = info.Description.Trim();
             }
-            if (info.Rating is not null)
+            if (info.Rating != 0)
             {
                 //Media.ImdbRating = int.Parse(info.Rating);
                 _temp.ImdbRating = 8;
