@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.Authorization.Users;
 using Abp.AutoMapper;
 using netflix.Authorization.Users;
+using netflix.Entities;
 
 namespace netflix.Users.Dto
 {
@@ -36,5 +38,6 @@ namespace netflix.Users.Dto
         public DateTime CreationTime { get; set; }
 
         public string[] RoleNames { get; set; }
+        public IEnumerable<Profile> Profiles { get; set; }
     }
 }
