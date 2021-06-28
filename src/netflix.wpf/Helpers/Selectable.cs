@@ -11,4 +11,10 @@ namespace netflix.wpf.Models
         public T Item { get; set; }
         public bool Selected { get; set; }
     }
+    public class SelectableNAcountable<T>
+    {
+        public T Item { get; set; }
+        public int Count { get; set; }
+        public bool Selected { get; set; }
+    }
 }

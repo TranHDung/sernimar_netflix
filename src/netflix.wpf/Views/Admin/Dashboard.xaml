@@ -38,7 +38,7 @@
             </Grid.RowDefinitions>
             <Button Margin="5px 0px" Grid.Column="0" Click="goToAccountPage">🔐 Quản lí tài khoản</Button>
             <Button Margin="5px 0px" Grid.Column="1" Click="goToMediaPage">🎬 Quản lí media</Button>
-            <Button Margin="5px 0px" Grid.Column="2">📊 Số liệu thống kê</Button>
+            <Button Margin="5px 0px" Grid.Column="2" Click="goToGenrePage">📊 Quản lí thể loại</Button>
             <Button Style="{StaticResource MaterialDesignFlatLightBgButton}" Margin="5px 0px" Grid.Column="3" Click="Logout">Đăng xuất</Button>
             <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="22px">
                 <TextBlock>Cho them may cai chart zo day cho dep mat, later</TextBlock>

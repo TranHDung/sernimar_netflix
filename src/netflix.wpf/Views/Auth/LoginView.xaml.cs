@@ -42,7 +42,8 @@ namespace netflix.wpf.Views.Auth
 
         private void OpenForgetPassTab(object sender, RoutedEventArgs e)
         {
-            mainTab.TabIndex = 3;
+            //mainTab.SelectedIndex = 2;
+            forgetTabItem.IsSelected = true;
         }
     }
 }

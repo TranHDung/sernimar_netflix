@@ -22,10 +22,10 @@ namespace netflix.wpf.Views.Admin
     /// </summary>
     public partial class MediaManagerView : Page
     {
-        public MediaManagerView()
+        public MediaManagerView(Genre? gen)
         {
             InitializeComponent();
-            this.DataContext = new MediaManagerViewModel();
+            this.DataContext = new MediaManagerViewModel(gen);
         }
 
         private void AddOrEditMedia(object sender, RoutedEventArgs e)
