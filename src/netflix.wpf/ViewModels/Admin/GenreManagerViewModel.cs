@@ -43,15 +43,20 @@ namespace netflix.wpf.ViewModels.Admin
         private void delete()
         {
             var x = Genres.ToList();
-            var selectedUsers = x.Where(i => i.Selected == true).ToList();
+            var selectedGenres = x.Where(i => i.Selected == true).ToList();
 
-            if (selectedUsers.Count > 0)
+            if (selectedGenres.Count > 0)
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Xóa " + selectedUsers.Count + " thể loại?", "Xóa", MessageBoxButton.YesNoCancel);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Xóa " + selectedGenres.Count + " thể loại?", "Xóa", MessageBoxButton.YesNoCancel);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    selectedUsers.ForEach(u =>
+                    selectedGenres.ForEach(u =>
                     {
+                        if (u.Count > 0)
+                        {
+                            MessageBox.Show("Không thể xóa những thể loại đang có phim, vui lòng kiểm tra lại!");
+                            return;
+                        }
                         DeleteData("/api/services/app/Genre/Delete?genreId=" + u.Item.Id);
                     });
                 }
