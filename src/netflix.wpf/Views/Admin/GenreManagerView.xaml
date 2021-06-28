@@ -1,0 +1,79 @@
+﻿<Page x:Class="netflix.wpf.Views.Admin.GenreManager"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:netflix.wpf.Views.Admin" xmlns:admin="clr-namespace:netflix.wpf.ViewModels.Admin" d:DataContext="{d:DesignInstance Type=admin:GenreManagerViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="GenreManager">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" Name="d" />
+            <RowDefinition Height="70" Name="sdd" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Margin="5px 0px" FontWeight="Bold" VerticalAlignment="Center" FontSize="18px">Quản lí thể loại</TextBlock>
+        <Button Grid.Column="0" Grid.Row="1" Margin="5px 0px" Click="AddOrEditMedia">+ Thêm thể loại mới</Button>
+        <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatDarkBgButton}" Background="OrangeRed" Grid.Column="1" Margin="5px 0px" Command="{Binding DeleteCommand}">- Xóa thể loại</Button>
+        <Button Grid.Row="1" Style="{StaticResource MaterialDesignIconButton}" HorizontalAlignment="Left" Grid.Column="2" Margin="5px 0px" Command="{Binding RefreshCommand}">⟳</Button>
+     
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding Genres}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Chọn" Binding="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGridCheckBoxColumn.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridCheckBoxColumn.CellStyle>
+                </DataGridCheckBoxColumn>
+                <DataGridTemplateColumn Header="Id" Width="SizeToCells" IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.Id}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Tên" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Item.Name">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.Name}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Số lượng phim" Width="120" IsReadOnly="True" CanUserSort="True" SortMemberPath="Count">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Count}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn CanUserSort="True" SortMemberPath="Item.CreatedDate" Header="Ngày tạo" Width="SizeToCells" IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Item.CreatedDate}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Thao tác" Width="SizeToCells" IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <Button Margin="5px" ToolTip="Chỉnh sửa thể loại" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding Item}"  Click="AddOrEditMedia" Content="✎" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                                <Button Margin="5px" ToolTip="Quản lí video thuộc thể loại này" Style="{StaticResource MaterialDesignOutlinedButton}" Tag="{Binding Item}"  Click="AddOrEditMediaByGenre" Content=" 🎬 " HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+    </Grid>
+</Page>

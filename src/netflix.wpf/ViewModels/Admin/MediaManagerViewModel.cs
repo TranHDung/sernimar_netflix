@@ -132,7 +132,7 @@ namespace netflix.wpf.ViewModels.Admin
                     {
                         DeleteData("/api/services/app/Media/Delete?mediaId=" + u.Item.Id);
                     });
-                    getInitData();
+                    getInitData(null);
                 }
             }
             else
@@ -150,24 +150,44 @@ namespace netflix.wpf.ViewModels.Admin
             }
         }
 
-        private void getInitData()
+        private void getInitData(Genre defaultGen)
         {
-            var _media = getData<List<Media>>("/api/services/app/Media/GetAll");
 
-            var _genres = getData<List<Genre>>("/api/services/app/Genre/GetAll");
-            _genres.Insert(0, new Genre() { Name = "-----Không lựa chọn-----", Id = 0 });
-            SelectedGenre = _genres[0];
-            Genres = _genres;
-
-            _media.ForEach(m =>
+            if(defaultGen is not null)
             {
-                m.Genre = Genres.Where(i => i.Id == m.GenreId).First();
-            });
-            Medias = _media.Select(i => new Selectable<Media> { Item = i, Selected = false }).ToList();
+                var _media = getData<List<Media>>("/api/services/app/Media/GetAll");
+                var _genres = getData<List<Genre>>("/api/services/app/Genre/GetAll");
+                _genres.Insert(0, new Genre() { Name = "-----Không lựa chọn-----", Id = 0 });
+                SelectedGenre = _genres.Where(i => i.Id == defaultGen.Id).FirstOrDefault();
+                Genres = _genres;
+
+                _media.ForEach(m =>
+                {
+                    m.Genre = Genres.Where(i => i.Id == m.GenreId).First();
+                });
+
+                Medias = _media.Select(i => new Selectable<Media> { Item = i, Selected = false }).ToList();
+                submitSearch();
+            }
+            else
+            {
+                var _media = getData<List<Media>>("/api/services/app/Media/GetAll");
+                var _genres = getData<List<Genre>>("/api/services/app/Genre/GetAll");
+                _genres.Insert(0, new Genre() { Name = "-----Không lựa chọn-----", Id = 0 });
+                SelectedGenre = _genres[0];
+                Genres = _genres;
+
+                _media.ForEach(m =>
+                {
+                    m.Genre = Genres.Where(i => i.Id == m.GenreId).First();
+                });
+                Medias = _media.Select(i => new Selectable<Media> { Item = i, Selected = false }).ToList();
+            }
+            
         }
-        public MediaManagerViewModel()
+        public MediaManagerViewModel(Genre gen)
         {
-            getInitData();
+            getInitData(gen);
             FromCreatedDate = DateTime.Today.AddYears(-3);
             ToCreatedDate = DateTime.Today;
         }

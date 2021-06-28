@@ -146,7 +146,7 @@ namespace netflix.wpf.ViewModels.Admin
             //https://stackoverflow.com/questions/35478663/upload-file-without-multipart-form-data-using-restsharp
             Media.GenreId = SelectedGenre.Id;
             bool isSuccess = false;
-            if (IsAdd)
+            if (IsAdd && FileName != "Chưa file nào được chọn")
             {
                 var justAddedMovieId = postData<int>("/api/services/app/Media/Add", Media);
 
@@ -163,6 +163,8 @@ namespace netflix.wpf.ViewModels.Admin
             }
             else
             {
+                MessageBox.Show("Không thành công, vui lòng kiểm tra lại!");
+
                 //call edit api
                 var x = 1;
             }

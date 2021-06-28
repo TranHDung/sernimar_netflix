@@ -27,40 +27,8 @@ namespace netflix.wpf.View.Admin
         {
             InitializeComponent();
             //NavigationService.bac();
-            DataContext = sampleData();
         }
-        private DashboardViewModel sampleData()
-        {
-            var ctx = new DashboardViewModel()
-            {
-                ActionLinks = new List<VỉewModel.Admin.Action>()
-                {
-                    new VỉewModel.Admin.Action()
-                    {
-                        Id = 1,
-                        Uri = "/",
-                        Description = "Quản lí media",
-                        DisplayName =  "Quản lí media"
-                    },
-                    new VỉewModel.Admin.Action()
-                    {
-                        Id = 2,
-                        Uri = "/test",
-                        Description = "Quản lí tài khoản",
-                        DisplayName =  "Quản lí tài khoản"
-                    },
-                    new VỉewModel.Admin.Action()
-                    {
-                        Id = 3,
-                        Uri = "/test",
-                        Description = "Số liệu thống kê",
-                        DisplayName =  "Số liệu thống kê"
-                    },
-                }
-            };
-            return ctx;
-        }
-
+        
         private void goToAccountPage(object sender, RoutedEventArgs e)
         {
             var accPage = new AccountManagerView();
@@ -68,8 +36,13 @@ namespace netflix.wpf.View.Admin
         }
         private void goToMediaPage(object sender, RoutedEventArgs e)
         {
-            var media = new MediaManagerView();
+            var media = new MediaManagerView(null);
             NavigationService.Navigate(media);
+        }
+        private void goToGenrePage(object sender, RoutedEventArgs e)
+        {
+            var gen = new GenreManager();
+            NavigationService.Navigate(gen);
         }
 
         private void Logout(object sender, RoutedEventArgs e)
