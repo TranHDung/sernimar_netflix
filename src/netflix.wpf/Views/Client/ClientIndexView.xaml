@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       Title="ClientIndexView">
 
-    <Grid>
-        <TextBlock>Page nay de hien thi phim</TextBlock>
-    </Grid>
+    <StackPanel>
+        
+    </StackPanel>
 </Page>

@@ -33,6 +33,9 @@ namespace netflix.wpf.Views.Auth
         {
             var db = new ClientIndexView();
             NavigationService.Navigate(db);
+            var win2 = new Client.Index();
+            
+           
         }
         private void GoToAdminPage(object sender, RoutedEventArgs e)
         {

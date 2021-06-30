@@ -10,7 +10,7 @@ namespace netflix.ApiGenre
 {
     public interface IProfileAppService : IApplicationService
     {
-        public Task Add(Profile profile);
+        public Task<Profile> Add(Profile profile);
         public Task Remove(int profileId);
         public Task Update(Profile profile);
         public List<Profile> GetAll();

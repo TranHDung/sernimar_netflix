@@ -3,7 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:netflix.wpf.View.Admin" xmlns:admin="clr-namespace:netflix.wpf.VỉewModel.Admin" d:DataContext="{d:DesignInstance Type=admin:DashboardViewModel}"
+      xmlns:local="clr-namespace:netflix.wpf.View.Admin" 
+      xmlns:admin="clr-namespace:netflix.wpf.VỉewModel.Admin" 
+      xmlns:oxy="http://oxyplot.org/wpf" 
+      d:DataContext="{d:DesignInstance Type=admin:DashboardViewModel}"
       mc:Ignorable="d" 
       Title="Dashboard">
     
@@ -40,9 +43,33 @@
             <Button Margin="5px 0px" Grid.Column="1" Click="goToMediaPage">🎬 Quản lí media</Button>
             <Button Margin="5px 0px" Grid.Column="2" Click="goToGenrePage">📊 Quản lí thể loại</Button>
             <Button Style="{StaticResource MaterialDesignFlatLightBgButton}" Margin="5px 0px" Grid.Column="3" Click="Logout">Đăng xuất</Button>
-            <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="22px">
-                <TextBlock>Cho them may cai chart zo day cho dep mat, later</TextBlock>
-            </StackPanel>
+            <Border Grid.Row="1" Grid.ColumnSpan="4" Padding="12px"  Margin="22px" BorderThickness="1" CornerRadius="20" BorderBrush="Black">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50px" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="5px 5px" FontWeight="Bold" FontSize="18px">Số liệu thống kê</TextBlock>
+                    <StackPanel Grid.Column="0" Grid.Row="1">
+                        <StackPanel>
+                            <oxy:PlotView Model="{Binding Model1}" Height="300" Width="300">
+                                
+                            </oxy:PlotView>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Grid.Row="1">
+                        <StackPanel>
+                            <oxy:PlotView Model="{Binding Model2}" Height="300" Width="300">
+                            </oxy:PlotView>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                
+            </Border>
         </Grid>
     </StackPanel>
    

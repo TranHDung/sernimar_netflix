@@ -113,11 +113,12 @@ namespace netflix.wpf.ViewModels.Auth
             {
                 AuthToken.setAccessToken(result.AccessToken);
                 User = getData<UserDto>("/api/services/app/User/Get?Id=" + result.UserId);
-                IsLoggedIn = true;
                 if (User.RoleNames[0] == "ADMIN")
                 {
                     IsAdminUser = true;
                 }
+                IsLoggedIn = true;
+
             }
         }
         public AuthenticateModel AuthData

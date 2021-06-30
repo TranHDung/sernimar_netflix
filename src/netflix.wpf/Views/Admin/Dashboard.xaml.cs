@@ -26,7 +26,7 @@ namespace netflix.wpf.View.Admin
         public Dashboard()
         {
             InitializeComponent();
-            //NavigationService.bac();
+            this.DataContext = new DashboardViewModel();
         }
         
         private void goToAccountPage(object sender, RoutedEventArgs e)

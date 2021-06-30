@@ -3,13 +3,91 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:netflix.wpf"
+        xmlns:local="clr-namespace:netflix.wpf" xmlns:auth="clr-namespace:netflix.wpf.ViewModels.Auth" d:DataContext="{d:DesignInstance Type=auth:LoginViewModel}"
         mc:Ignorable="d"
         Title="Netflix 2.0 - The new level of movie" Height="720px" Width="1080px">
 
-    <Grid>
+    <!--<Grid>
         <DockPanel>
             <Frame x:Name="_mainFrame" />
         </DockPanel>
-    </Grid>
+        
+    </Grid>-->
+    <StackPanel Margin="0">
+        <StackPanel.Background>
+            <ImageBrush Opacity=".8" ImageSource="https://assets.nflxext.com/ffe/siteui/vlv3/c0a32732-b033-43b3-be2a-8fee037a6146/c56a88b3-ae48-4454-a2f9-3d0ec5f5249d/VN-en-20210607-popsignuptwoweeks-perspective_alpha_website_small.jpg" />
+        </StackPanel.Background>
+        <TabControl Name="mainTab" Style="{StaticResource MaterialDesignTabControl}"  Background="White">
+            <TabItem Header="Đăng nhập">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150px" />
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox Name="cbAdmin" IsChecked="{Binding IsAdminUser}" Checked="AdminChecked" Visibility="Hidden" />
+                    <CheckBox Name="cbLogin" IsChecked="{Binding IsLoggedIn}" Checked="IsLoggedInChecked" Visibility="Hidden" />
+                    <Border CornerRadius="20" Background="White" Opacity=".9" x:Name="loginForm" Grid.Row="2" Grid.Column="1">
+                        <StackPanel Margin="20px 10px">
+                            <TextBlock Margin="0px 5px">Tên đăng nhập</TextBlock>
+                            <TextBox Background="White" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Text="{Binding AuthData.UserNameOrEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBlock Margin="0px 5px">Mật khẩu</TextBlock>
+                            <PasswordBox Background="White" Name="PasswordBox" Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}" />
+                            <Button Margin="0px 15px"  Command="{Binding Login}" CommandParameter="{Binding ElementName=PasswordBox}">Đăng nhập</Button>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}" Click="OpenForgetPassTab">Quên mật khẩu?</Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Đăng kí">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="9*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <TabControl x:Name="tabRegister" SelectedIndex="{Binding RegisterTabIndex}" Style="{StaticResource MaterialDesignNavigatilRailTabControl}" >
+                        <TabItem Width="200px" Header="1. Đăng kí tài khoản" Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                            <TextBlock Text="Nhập thông tin" />
+                        </TabItem>
+                        <TabItem Width="200px"  Header="2. Chọn gói cước" Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                            <TextBlock Text="Chọn gói cước" />
+                        </TabItem>
+                        <TabItem Width="200px"  Header="3. Thanh toán" Style="{StaticResource MaterialDesignNavigationRailTabItem }">
+                            <TextBlock Text="Thanh toán" />
+                        </TabItem>
+                    </TabControl>
+                    <WrapPanel HorizontalAlignment="Right" Grid.Row="1">
+                        <Button Command="{Binding RegisterTabPrev}" Margin="20px" Style="{StaticResource MaterialDesignOutlinedButton}">← Quay lại</Button>
+                        <Button Command="{Binding RegisterTabNext}">Tiếp tục →</Button>
+                    </WrapPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Quên mật khẩu" Name="forgetTabItem">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150px" />
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Border CornerRadius="20" Background="White" Opacity=".9" x:Name="forgetForm" Grid.Row="2" Grid.Column="1">
+                        <StackPanel Margin="20px 20px">
+                            <TextBlock>Email đã đăng kí</TextBlock>
+                            <TextBox Margin="0px 10px" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Text="{Binding AuthData.UserNameOrEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <Button Click="OpenForgetPassTab">Lấy lại mật khẩu</Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </StackPanel>
 </Window>

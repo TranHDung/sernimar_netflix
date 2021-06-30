@@ -17,10 +17,11 @@ namespace netflix.ApiGenre
             _profileRepository = profileRepository;
         }
 
-        public async Task Add(Profile profile)
+        public async Task<Profile> Add(Profile profile)
         {
             profile.CreatedDate = DateTime.Now;
-            await _profileRepository.InsertAsync(profile);
+            var id = await _profileRepository.InsertAndGetIdAsync(profile);
+            return await _profileRepository.GetAsync(id);
         }
 
         public List<Profile> GetAll()
