@@ -119,5 +119,19 @@ namespace netflix.ApiGenre
                 Name = name
             };
         }
+
+        public async Task Update(Media media)
+        {
+            var entity = await _mediaRepository.FirstOrDefaultAsync(f => f.Id == media.Id);
+            entity.GenreId = media.GenreId;
+            entity.IBDMLink = media.IBDMLink;
+            entity.ImdbRating = media.ImdbRating;
+            entity.Name = media.Name;
+            entity.RawName = media.RawName;
+            entity.FilePath = media.FilePath;
+            entity.Type = media.Type;
+            entity.Description = media.Description;
+            await _mediaRepository.UpdateAsync(entity);
+        }
     }
 }

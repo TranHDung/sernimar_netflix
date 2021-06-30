@@ -12,7 +12,8 @@ namespace netflix.ApiGenre
 {
     public interface IMediaAppService : IApplicationService
     {
-        public Task<int> Add(Media genre);
+        public Task<int> Add(Media media);
+        public Task Update(Media media);
         public Task<List<Media>> GetAll();
         public Task<bool> UploadMedia(IFormFile file, int mediaId);
         public Task Delete(int mediaId);
