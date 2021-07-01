@@ -1,6 +1,7 @@
 ﻿using netflix.Entities;
 using netflix.Sessions.Dto;
 using netflix.wpf.Command;
+using netflix.wpf.Models;
 using netflix.wpf.VỉewModel;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace netflix.wpf.ViewModels.Client
                 OnPropertyChanged();
             }
         }
-        private UserLoginInfoDto user { get; set; }
+        private int userId { get; set; }
         private ICommand createProfileCommand;
         public ICommand CreateProfileCommand
         {
@@ -39,9 +40,9 @@ namespace netflix.wpf.ViewModels.Client
         }
         private void createProfile()
         {
-            if(user.Id != 0 && NewProfile.Name is not null)
+            if(userId != 0 && NewProfile.Name is not null)
             {
-                NewProfile.UserId = (int)user.Id;
+                NewProfile.UserId = userId;
                 var profile = postData<Profile>("/api/services/app/Profile/Add", NewProfile);
                 if (profile != null)
                 {
@@ -68,8 +69,8 @@ namespace netflix.wpf.ViewModels.Client
         private void getInitData()
         {
             NewProfile = new Profile();
-            user = getData<GetCurrentLoginInformationsOutput>("/api/services/app/Session/GetCurrentLoginInformations").User;
-            Profiles = new ObservableCollection<Profile>(getData<List<Profile>>("/api/services/app/Profile/GetProfilesByUserId?userId=" + user.Id));
+            var userId = int.Parse(AuthToken.getUserId());
+            Profiles = new ObservableCollection<Profile>(getData<List<Profile>>("/api/services/app/Profile/GetProfilesByUserId?userId=" + userId));
         }
 
         public SelectProfileViewModel()

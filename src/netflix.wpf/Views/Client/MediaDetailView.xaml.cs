@@ -1,4 +1,5 @@
 ﻿using netflix.Entities;
+using netflix.wpf.ViewModels.Client;
 using netflix.wpf.Views.Admin;
 using System;
 using System.Collections.Generic;
@@ -24,11 +25,11 @@ namespace netflix.wpf.Views.Client
         public MediaDetailView(Media m)
         {
             InitializeComponent();
-            this.DataContext = m;
+            this.DataContext = new MediaDetailViewModel(m);
             FeatVideo.Volume = 0;
             FeatVideo.Position = TimeSpan.FromSeconds(1);
             FeatVideo.Play();
-            FeatVideo.SpeedRatio = 0.3;
+            FeatVideo.SpeedRatio = 0.1;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

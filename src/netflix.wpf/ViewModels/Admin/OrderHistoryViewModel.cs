@@ -1,6 +1,8 @@
 ﻿using netflix.Authorization.Users;
 using netflix.Entities;
+using netflix.Sessions.Dto;
 using netflix.Users.Dto;
+using netflix.wpf.Models;
 using netflix.wpf.VỉewModel;
 using System;
 using System.Collections.Generic;
@@ -57,7 +59,17 @@ namespace netflix.wpf.ViewModels.Admin
 
         public OrderHistoryViewModel(UserDto user)
         {
-            User = user;
+            if(user is null)
+            {
+                User = new UserDto()
+                {
+                    Id = int.Parse(AuthToken.getUserId()),
+                };
+            }
+            else
+            {
+                User = user;
+            }
             getInitData();
             // get user's order history by userId
             // dummies

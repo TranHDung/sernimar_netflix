@@ -1,0 +1,124 @@
+﻿<UserControl
+    x:Class="netflix.wpf.Views.Client.UserAccountView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:client="clr-namespace:netflix.wpf.ViewModels.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:netflix.wpf.Views.Client"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=client:UserAccountViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <TabControl Style="{StaticResource MaterialDesignTabControl}">
+            <TabItem Header="Quản lí tài khoản">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="100" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="15,5">
+                        <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Tên đệm</TextBlock>
+                        <TextBox
+                            FontSize="14"
+                            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                            Text="{Binding User.Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="15,5">
+                        <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Tên</TextBlock>
+                        <TextBox
+                            FontSize="14"
+                            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                            Text="{Binding User.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="15,5">
+                        <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Email</TextBlock>
+                        <TextBox
+                            FontSize="14"
+                            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                            Text="{Binding User.EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <WrapPanel
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        HorizontalAlignment="Right">
+                        <Button
+                            Margin="15"
+                            Command="{Binding SaveChange}"
+                            FontSize="18"
+                            Style="{StaticResource MaterialDesignFlatDarkBgButton}">
+                            Cập nhật
+                        </Button>
+                    </WrapPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Quản lí profile">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100px" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <WrapPanel
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        <StackPanel Width="200px">
+                            <TextBlock>Tên profile</TextBlock>
+                            <TextBox Text="{Binding NewProfile.Name}" />
+                        </StackPanel>
+                        <Button
+                            VerticalAlignment="Bottom"
+                            Command="{Binding CreateProfileCommand}"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            + Thêm
+                        </Button>
+                    </WrapPanel>
+                    <ListView
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="20"
+                        Padding="20"
+                        ItemsSource="{Binding Profiles}"
+                        Style="{StaticResource MahApps.Styles.ListView}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel VerticalAlignment="Top">
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Name}" />
+                                    <Button
+                                        HorizontalAlignment="Right"
+                                        Command="{Binding Path=DataContext.DeleteProfileCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding .}"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        Xóa
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

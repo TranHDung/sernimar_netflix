@@ -112,6 +112,7 @@ namespace netflix.wpf.ViewModels.Auth
             else
             {
                 AuthToken.setAccessToken(result.AccessToken);
+                AuthToken.setUserId(result.UserId.ToString());
                 User = getData<UserDto>("/api/services/app/User/Get?Id=" + result.UserId);
                 if (User.RoleNames[0] == "ADMIN")
                 {

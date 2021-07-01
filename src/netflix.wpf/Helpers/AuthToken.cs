@@ -24,5 +24,13 @@ namespace netflix.wpf.Models
         {
             Properties.Settings.Default.ProfileId = id;
         }
+        public static string getUserId()
+        {
+            return Properties.Settings.Default.UserId;
+        }
+        public static void setUserId(string id)
+        {
+            Properties.Settings.Default.UserId = id;
+        }
     }
 }

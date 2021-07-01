@@ -21,10 +21,18 @@ namespace netflix.ApiAction
             _actionTypeRepository = actionTypeRepository;
         }
 
-        public async Task<int> Add(Entities.Action action)
+        public async Task<int> Add(Action action)
         {
-            var entity = await _actionRepository.InsertAsync(action);
-            return entity.Id;
+            int id = 0;
+            try
+            {
+                id = await _actionRepository.InsertAndGetIdAsync(action);
+            }
+            catch (Exception e)
+            {
+                var x = 2;
+            }
+            return id;
         }
 
         public async Task<int> AddActionType(ActionType actionType)
