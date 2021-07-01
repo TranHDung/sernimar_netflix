@@ -29,10 +29,16 @@ namespace netflix.ApiGenre
             return _profileRepository.GetAll().ToList();
         }
 
+        public async Task<List<Profile>> GetProfilesByUserId(int userId)
+        {
+            var entity = await _profileRepository.GetAllListAsync(p => p.UserId == userId);
+            return entity;
+        }
+
         public async Task Remove(int profileId)
         {
             var entity = await _profileRepository.FirstOrDefaultAsync(p => p.Id == profileId);
-            await _profileRepository.UpdateAsync(entity);
+            await _profileRepository.DeleteAsync(entity);
         }
 
         public async Task Update(Profile profile)

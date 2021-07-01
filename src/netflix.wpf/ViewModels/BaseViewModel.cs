@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using netflix.wpf.Interface;
 using netflix.wpf.Models;
 using Newtonsoft.Json;
 using RestSharp;

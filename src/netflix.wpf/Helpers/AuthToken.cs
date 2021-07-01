@@ -16,5 +16,13 @@ namespace netflix.wpf.Models
         {
             Properties.Settings.Default.AuthToken = token;
         }
+        public static string getProfileId()
+        {
+            return Properties.Settings.Default.ProfileId;
+        }
+        public static void setProfileId(string id)
+        {
+            Properties.Settings.Default.ProfileId = id;
+        }
     }
 }

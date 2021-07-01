@@ -1,4 +1,6 @@
 ﻿using MahApps.Metro.Controls;
+using netflix.Entities;
+using netflix.wpf.ViewModels.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace netflix.wpf.Views.Client
@@ -20,23 +23,31 @@ namespace netflix.wpf.Views.Client
     /// </summary>
     public partial class Index : MetroWindow
     {
-        public Index()
+        public Index(Profile profile)
         {
             InitializeComponent();
-            if (true)
+            this.DataContext = new IndexViewModel(profile);
+            HamburgerMenuControl.SelectedIndex = 0;
+        }
+        private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
+        {
+            this.HamburgerMenuControl.Content = e.InvokedItem;
+
+            if (!e.IsItemOptions && this.HamburgerMenuControl.IsPaneOpen)
             {
-                var profile = new SelectProfileView();
-                profile.ShowDialog();
+                // You can close the menu if an item was selected
+                this.HamburgerMenuControl.IsPaneOpen = false;
             }
         }
-        private void LaunchGitHubSite(object sender, RoutedEventArgs e)
-        {
-            // Launch the GitHub site...
-        }
 
-        private void DeployCupCakes(object sender, RoutedEventArgs e)
+
+        private void HamburgerMenuControl_OptionsItemClick_1(object sender, ItemClickEventArgs e)
         {
-            // deploy some CupCakes...
+            if (HamburgerMenuControl.IsPaneOpen)
+            {
+                // You can close the menu if an item was selected
+                this.HamburgerMenuControl.IsPaneOpen = false;
+            }
         }
     }
 }

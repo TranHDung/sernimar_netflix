@@ -1,0 +1,30 @@
+﻿<Window
+    x:Class="netflix.wpf.Views.Admin.VideoWatchView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:netflix.wpf.Views.Admin"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{Binding Name}"
+    Width="800"
+    Height="400"
+    mc:Ignorable="d">
+
+    <Grid>
+        <MediaElement
+            Name="elmMedia"
+            LoadedBehavior="Manual"
+            Source="{Binding FilePath}" />
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Border
+                Background="LightGray"
+                BorderBrush="Black"
+                BorderThickness="1"
+                CornerRadius="10"
+                Opacity="0.8" />
+            <Button Click="Pau" Style="{StaticResource MaterialDesignFlatDarkBgButton}">Pause</Button>
+            <Button Click="Full" Style="{StaticResource MaterialDesignFlatDarkBgButton}">full</Button>
+            <Button Click="Mute" Style="{StaticResource MaterialDesignFlatDarkBgButton}">Mute</Button>
+        </WrapPanel>
+    </Grid>
+</Window>

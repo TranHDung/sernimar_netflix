@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:netflix.wpf.Views.Client" xmlns:client="clr-namespace:netflix.wpf.ViewModels.Client" d:DataContext="{d:DesignInstance Type=client:SelectProfileViewModel}"
                   mc:Ignorable="d"
-        Title="Chọn profile" Height="600px" Width="300px">
+        Title="Chọn profile" Height="600px" Width="400px">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -15,20 +15,19 @@
             <RowDefinition Height="100px" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <WrapPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Center">
+        <WrapPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Width="200px">
                 <TextBlock>Tên profile</TextBlock>
                 <TextBox Text="{Binding NewProfile.Name}" />
             </StackPanel>
             <Button VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignFlatButton}" Command="{Binding CreateProfileCommand}">+ Thêm</Button>
         </WrapPanel>
-
         <ListView Style="{StaticResource MahApps.Styles.ListView}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Profiles}" Margin="20" Padding="20">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel VerticalAlignment="Top">
                         <TextBlock HorizontalAlignment="Left" Text="{Binding Name}"></TextBlock>
-                        <Button HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Tag="{Binding .}">
+                        <Button HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Tag="{Binding .}" Click="Button_Click">
                             Chọn
                         </Button>
                     </StackPanel>

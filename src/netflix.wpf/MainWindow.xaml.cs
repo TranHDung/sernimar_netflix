@@ -33,10 +33,7 @@ namespace netflix.wpf
         }
         private void GoToHomePage(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-            var win2 = new Views.Client.Index();
-            win2.ShowDialog();
-            this.Show();
+           
         }
         private void GoToAdminPage(object sender, RoutedEventArgs e)
         {
@@ -68,8 +65,8 @@ namespace netflix.wpf
             else if((bool)cbLogin.IsChecked) // goto inedx page
             {
                 this.Hide();
-                var dashboard = new Views.Client.Index();
-                dashboard.ShowDialog();
+                var p = new Views.Client.SelectProfileView();
+                p.ShowDialog();
                 this.Show();
             }
             cbAdmin.IsChecked = false;

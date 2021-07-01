@@ -24,6 +24,7 @@ namespace netflix.wpf.ViewModels.Client
                 OnPropertyChanged();
             }
         }
+        private UserLoginInfoDto user { get; set; }
         private ICommand createProfileCommand;
         public ICommand CreateProfileCommand
         {
@@ -38,17 +39,14 @@ namespace netflix.wpf.ViewModels.Client
         }
         private void createProfile()
         {
-            // get current user info
-            var curInfo = getData<GetCurrentLoginInformationsOutput>("/api/services/app/Session/GetCurrentLoginInformations");
-            if(curInfo is not null)
+            if(user.Id != 0 && NewProfile.Name is not null)
             {
-                NewProfile.UserId = (int)curInfo.User.Id;
+                NewProfile.UserId = (int)user.Id;
                 var profile = postData<Profile>("/api/services/app/Profile/Add", NewProfile);
                 if (profile != null)
                 {
                     Profiles.Add(profile);
-
-                    Profiles = Profiles;
+                    NewProfile = new Profile();
                 }
             }
             else
@@ -69,12 +67,13 @@ namespace netflix.wpf.ViewModels.Client
         
         private void getInitData()
         {
-            Profiles = new ObservableCollection<Profile>();
+            NewProfile = new Profile();
+            user = getData<GetCurrentLoginInformationsOutput>("/api/services/app/Session/GetCurrentLoginInformations").User;
+            Profiles = new ObservableCollection<Profile>(getData<List<Profile>>("/api/services/app/Profile/GetProfilesByUserId?userId=" + user.Id));
         }
 
         public SelectProfileViewModel()
         {
-            var _ = new List<Profile>();
             getInitData();
         }
     }
