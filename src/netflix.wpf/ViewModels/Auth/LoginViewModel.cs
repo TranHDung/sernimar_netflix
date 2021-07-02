@@ -1,9 +1,11 @@
-﻿using netflix.Authorization.Users;
+﻿using netflix.Authorization.Accounts.Dto;
+using netflix.Authorization.Users;
 using netflix.Models.TokenAuth;
 using netflix.Users.Dto;
 using netflix.wpf.Command;
 using netflix.wpf.Models;
 using netflix.wpf.VỉewModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -17,6 +19,31 @@ namespace netflix.wpf.ViewModels.Auth
         private bool isAdminUser;
         private int registerTabIndex;
         private ICommand login;
+        private string rePassword;
+        public string RePassword
+        {
+            get => rePassword;
+            set
+            {
+                rePassword = value;
+            }
+        }
+        private RegisterInput registerModel;
+        public RegisterInput RegisterModel
+        {
+            get
+            {
+                if(registerModel is null)
+                {
+                    registerModel = new RegisterInput();
+                }
+                return registerModel;
+            }
+            set
+            {
+                registerModel = value;
+            }
+        }
         public bool IsLoggedIn
         {
             get => isLoggedIn;
@@ -59,6 +86,13 @@ namespace netflix.wpf.ViewModels.Auth
         }
         private void nextTab(object state)
         {
+            if (RegisterTabIndex == 0)
+            {
+                if (!register())
+                {
+                    return;
+                }
+            }
             if (RegisterTabIndex > 3)
             {
                 submitRegister();
@@ -130,6 +164,16 @@ namespace netflix.wpf.ViewModels.Auth
                 authData = value;
                 OnPropertyChanged();
             }
+        }
+        private bool register()
+        {
+            var r = this.postData<RegisterOutput>("/api/services/app/Account/Register", RegisterModel);
+            if(r is null)
+            {
+                MessageBox.Show("Đăng kí không thành công, vui lòng kiểm tra lại!");
+                return false;
+            }
+            return true;
         }
         public LoginViewModel()
         {

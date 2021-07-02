@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using netflix.Entities;
+using netflix.Medias;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace netflix.ApiAction
         public async Task<int> Add(Action action)
         {
             int id = 0;
+            action.CreatedDate = DateTime.Today;
             try
             {
                 id = await _actionRepository.InsertAndGetIdAsync(action);
@@ -63,6 +65,45 @@ namespace netflix.ApiAction
         {
             var entities = await _actionTypeRepository.GetAllListAsync();
             return entities;
+        }
+
+        public async Task<MediaStat> GetMediaStat()
+        {
+            var allAction = _actionRepository.GetAllIncluding(i=>i.Media).ToList();
+            var res = new MediaStat();
+            // action type id = 1 is Watch
+            res.YesterdayView = allAction.Where(i => i.ActionTypeId == 1).Where(i => i.CreatedDate == DateTime.Today.AddDays(-1)).ToList().Count();
+            res.ToDayView = allAction.Where(i => i.ActionTypeId == 1).Where(i => i.CreatedDate == DateTime.Today).ToList().Count();
+
+            res.MediaViews= new List<MediaAndView>();
+            allAction.ToList().ForEach(i =>
+            {
+                var curMedia = res.MediaViews.Where(m => m.Media.Id == i.MediaId).FirstOrDefault();
+                if(curMedia is not null)
+                // new media da ton tai trong list thi +1
+                {
+                    curMedia.ViewCount += 1;
+                }
+                else
+                {
+                    var m = new MediaAndView()
+                    {
+                        Media = i.Media,
+                        ViewCount = 1,
+                    };
+                    res.MediaViews.Add(m);
+                }
+            });
+            res.MediaViews = res.MediaViews.Where(m => m.ViewCount != 0).Select(i => new MediaAndView()
+            {
+                Media = new Media()
+                {
+                    Id = i.Media.Id,
+                    Name = i.Media.Name,
+                },
+                ViewCount = i.ViewCount
+            }).ToList();
+            return res;
         }
 
         public async Task Update(Entities.Action action)

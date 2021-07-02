@@ -94,23 +94,23 @@
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
 
-                    <mah:HamburgerMenuGlyphItem Glyph="" Label="Playlist">
+                    <mah:HamburgerMenuGlyphItem Glyph="" Label="My Playlist">
                         <mah:HamburgerMenuGlyphItem.Tag>
                             <view:TestView />
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
 
-                    <mah:HamburgerMenuGlyphItem Glyph="" Label="Video đã xem">
+                    <mah:HamburgerMenuGlyphItem Glyph="🕮" Label="Video đã xem">
                         <mah:HamburgerMenuGlyphItem.Tag>
                             <view:TestView />
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
-                    <mah:HamburgerMenuGlyphItem Glyph="" Label="Video đã xem">
+                    <mah:HamburgerMenuGlyphItem Glyph="💰" Label="Video đã xem">
                         <mah:HamburgerMenuGlyphItem.Tag>
                             <view:TestView />
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
-                    <mah:HamburgerMenuGlyphItem Glyph="" Label="Lịch sử thanh toán">
+                    <mah:HamburgerMenuGlyphItem Glyph="🕮" Label="Lịch sử thanh toán">
                         <mah:HamburgerMenuGlyphItem.Tag>
                             <view:PaymentHistoryView />
                         </mah:HamburgerMenuGlyphItem.Tag>

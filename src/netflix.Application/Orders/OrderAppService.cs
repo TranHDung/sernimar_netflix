@@ -21,5 +21,49 @@ namespace netflix.Orders
         {
             return _orderRepository.GetAll().Where(o => o.UserId == userId).ToList();
         }
+
+        public async Task<OrderStat> GetOrderStat()
+        {
+            var stat = new OrderStat();
+            stat.OrderAndProfs = new List<OrderAndProf>();
+
+            var allOrder = await _orderRepository.GetAllListAsync();
+            allOrder.ForEach(o =>
+            {
+                var item = stat.OrderAndProfs.Where(i => i.Date == o.CreatedDate).FirstOrDefault();
+                if(item is null)
+                {
+                    var oap = new OrderAndProf()
+                    {
+                        Date = o.CreatedDate,
+                        Prof = (int)o.Price,
+                    };
+                    stat.OrderAndProfs.Add(oap);
+                }
+                else
+                {
+                    item.Prof += (int)o.Price;
+                }
+            });
+            return stat;
+        }
+
+        public async Task<int> UserCreateOrder(Order order)
+        {
+            order.CreatedDate = DateTime.Today;
+            order.ExpireDate = DateTime.Today.AddDays(30);
+            order.User = null;
+            order.Price = 50000;
+            try
+            {
+             await _orderRepository.InsertAndGetIdAsync(order);
+
+            }
+            catch(Exception e)
+            { 
+
+            }
+            return 1;
+        }
     }
 }

@@ -109,9 +109,9 @@ namespace netflix.ApiGenre
 
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
-            var rating = doc.QuerySelector(".ratingValue span")?.InnerText;
-            var description = doc.QuerySelector(".plot_summary .summary_text")?.InnerText;
-            var name = doc.QuerySelector(".titleBar .title_wrapper h1")?.InnerText; ;
+            var rating = doc.QuerySelector(".AggregateRatingButton__RatingScore-sc-1il8omz-1")?.InnerText;
+            var description = doc.QuerySelector(".GenresAndPlot__TextContainerBreakpointXS_TO_M-cum89p-0")?.InnerText;
+            var name = doc.QuerySelector(".TitleHeader__TitleText-sc-1wu6n3d-0")?.InnerText;
             return new IMDBInfo 
             {
                 Rating = double.Parse(rating),

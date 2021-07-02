@@ -69,7 +69,7 @@ namespace netflix.wpf.ViewModels.Client
         private void getInitData()
         {
             NewProfile = new Profile();
-            var userId = int.Parse(AuthToken.getUserId());
+            userId = int.Parse(AuthToken.getUserId());
             Profiles = new ObservableCollection<Profile>(getData<List<Profile>>("/api/services/app/Profile/GetProfilesByUserId?userId=" + userId));
         }
 

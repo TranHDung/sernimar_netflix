@@ -52,5 +52,11 @@ namespace netflix.wpf.View.Admin
             NavigationService.RemoveBackEntry();
 
         }
+
+        private void gotoStatPage(object sender, RoutedEventArgs e)
+        {
+            var page = new StatView();
+            NavigationService.Navigate(page);
+        }
     }
 }

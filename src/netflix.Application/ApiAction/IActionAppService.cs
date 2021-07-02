@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services;
 using netflix.Entities;
+using netflix.Medias;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,7 @@ namespace netflix.ApiAction
         public Task UpdateActionType(ActionType actionType);
         public Task<List<ActionType>> GetAllActionType();
         public Task DeleteActionType(int actionTypeId);
+        public Task<MediaStat> GetMediaStat();
     }
+   
 }

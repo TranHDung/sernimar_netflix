@@ -1,23 +1,31 @@
-﻿<Window x:Class="netflix.wpf.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:netflix.wpf" xmlns:auth="clr-namespace:netflix.wpf.ViewModels.Auth" d:DataContext="{d:DesignInstance Type=auth:LoginViewModel}"
-        mc:Ignorable="d"
-        Title="Netflix 2.0 - The new level of movie" Height="720px" Width="1080px">
+﻿<Window
+    x:Class="netflix.wpf.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:auth="clr-namespace:netflix.wpf.ViewModels.Auth"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:netflix.wpf"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Netflix 2.0 - The new level of movie"
+    Width="1080px"
+    Height="720px"
+    d:DataContext="{d:DesignInstance Type=auth:LoginViewModel}"
+    mc:Ignorable="d">
 
     <!--<Grid>
         <DockPanel>
             <Frame x:Name="_mainFrame" />
         </DockPanel>
-        
+
     </Grid>-->
     <StackPanel Margin="0">
         <StackPanel.Background>
-            <ImageBrush Opacity=".8" ImageSource="https://assets.nflxext.com/ffe/siteui/vlv3/c0a32732-b033-43b3-be2a-8fee037a6146/c56a88b3-ae48-4454-a2f9-3d0ec5f5249d/VN-en-20210607-popsignuptwoweeks-perspective_alpha_website_small.jpg" />
+            <ImageBrush ImageSource="https://assets.nflxext.com/ffe/siteui/vlv3/c0a32732-b033-43b3-be2a-8fee037a6146/c56a88b3-ae48-4454-a2f9-3d0ec5f5249d/VN-en-20210607-popsignuptwoweeks-perspective_alpha_website_small.jpg" Opacity=".8" />
         </StackPanel.Background>
-        <TabControl Name="mainTab" Style="{StaticResource MaterialDesignTabControl}"  Background="White">
+        <TabControl
+            Name="mainTab"
+            Background="White"
+            Style="{StaticResource MaterialDesignTabControl}">
             <TabItem Header="Đăng nhập">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -27,19 +35,51 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="150px" />
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <CheckBox Name="cbAdmin" IsChecked="{Binding IsAdminUser}" Checked="AdminChecked" Visibility="Hidden" />
-                    <CheckBox Name="cbLogin" IsChecked="{Binding IsLoggedIn}" Checked="IsLoggedInChecked" Visibility="Hidden" />
-                    <Border CornerRadius="20" Background="White" Opacity=".9" x:Name="loginForm" Grid.Row="2" Grid.Column="1">
-                        <StackPanel Margin="20px 10px">
-                            <TextBlock Margin="0px 5px">Tên đăng nhập</TextBlock>
-                            <TextBox Background="White" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Text="{Binding AuthData.UserNameOrEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                            <TextBlock Margin="0px 5px">Mật khẩu</TextBlock>
-                            <PasswordBox Background="White" Name="PasswordBox" Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}" />
-                            <Button Margin="0px 15px"  Command="{Binding Login}" CommandParameter="{Binding ElementName=PasswordBox}">Đăng nhập</Button>
-                            <Button Style="{StaticResource MaterialDesignFlatButton}" Click="OpenForgetPassTab">Quên mật khẩu?</Button>
+                    <CheckBox
+                        Name="cbAdmin"
+                        Checked="AdminChecked"
+                        IsChecked="{Binding IsAdminUser}"
+                        Visibility="Hidden" />
+                    <CheckBox
+                        Name="cbLogin"
+                        Checked="IsLoggedInChecked"
+                        IsChecked="{Binding IsLoggedIn}"
+                        Visibility="Hidden" />
+                    <Border
+                        x:Name="loginForm"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Background="White"
+                        CornerRadius="20"
+                        Opacity=".9">
+                        <StackPanel Margin="20px,10px">
+                            <TextBlock Margin="0px,5px">Tên đăng nhập</TextBlock>
+                            <TextBox
+                                Background="White"
+                                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                Text="{Binding AuthData.UserNameOrEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Margin="0px,5px">Mật khẩu</TextBlock>
+                            <PasswordBox
+                                Name="PasswordBox"
+                                Background="White"
+                                Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}">
+                                <PasswordBox.InputBindings>
+                                    <KeyBinding
+                                        Key="Enter"
+                                        Command="{Binding Login}"
+                                        CommandParameter="{Binding ElementName=PasswordBox}" />
+                                </PasswordBox.InputBindings>
+                            </PasswordBox>
+                            <Button
+                                Margin="0px,15px"
+                                Command="{Binding Login}"
+                                CommandParameter="{Binding ElementName=PasswordBox}">
+                                Đăng nhập
+                            </Button>
+                            <Button Click="OpenForgetPassTab" Style="{StaticResource MaterialDesignFlatButton}">Quên mật khẩu?</Button>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -50,24 +90,111 @@
                         <RowDefinition Height="9*" />
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <TabControl x:Name="tabRegister" SelectedIndex="{Binding RegisterTabIndex}" Style="{StaticResource MaterialDesignNavigatilRailTabControl}" >
-                        <TabItem Width="200px" Header="1. Đăng kí tài khoản" Style="{StaticResource MaterialDesignNavigationRailTabItem}">
-                            <TextBlock Text="Nhập thông tin" />
+                    <TabControl
+                        x:Name="tabRegister"
+                        SelectedIndex="{Binding RegisterTabIndex}"
+                        Style="{StaticResource MaterialDesignNavigatilRailTabControl}">
+                        <TabItem
+                            Width="200px"
+                            Header="1. Đăng kí tài khoản"
+                            Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="120" />
+                                    <RowDefinition Height="120" />
+                                    <RowDefinition Height="120" />
+                                </Grid.RowDefinitions>
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="15,5">
+                                    <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Tên đăng nhập</TextBlock>
+                                    <TextBox
+                                        FontSize="14"
+                                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                        Text="{Binding RegisterModel.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="15,5">
+                                    <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Email</TextBlock>
+                                    <TextBox
+                                        FontSize="14"
+                                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                        Text="{Binding RegisterModel.EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="15,5">
+                                    <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Mật khẩu</TextBlock>
+                                    <TextBox
+                                        FontSize="14"
+                                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                        Text="{Binding RegisterModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="15,5">
+                                    <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Nhập lại mật khẩu</TextBlock>
+                                    <TextBox
+                                        FontSize="14"
+                                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                        Text="{Binding RePassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Margin="15,5">
+                                    <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Tên đệm</TextBlock>
+                                    <TextBox
+                                        FontSize="14"
+                                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                        Text="{Binding RegisterModel.Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Margin="15,5">
+                                    <TextBlock Style="{StaticResource MaterialDesignTextBlock}">Tên</TextBlock>
+                                    <TextBox
+                                        FontSize="14"
+                                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                        Text="{Binding RegisterModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
                         </TabItem>
-                        <TabItem Width="200px"  Header="2. Chọn gói cước" Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                        <TabItem
+                            Width="200px"
+                            Header="2. Chọn gói cước"
+                            Style="{StaticResource MaterialDesignNavigationRailTabItem}">
                             <TextBlock Text="Chọn gói cước" />
                         </TabItem>
-                        <TabItem Width="200px"  Header="3. Thanh toán" Style="{StaticResource MaterialDesignNavigationRailTabItem }">
+                        <TabItem
+                            Width="200px"
+                            Header="3. Thanh toán"
+                            Style="{StaticResource MaterialDesignNavigationRailTabItem}">
                             <TextBlock Text="Thanh toán" />
                         </TabItem>
                     </TabControl>
-                    <WrapPanel HorizontalAlignment="Right" Grid.Row="1">
-                        <Button Command="{Binding RegisterTabPrev}" Margin="20px" Style="{StaticResource MaterialDesignOutlinedButton}">← Quay lại</Button>
+                    <WrapPanel Grid.Row="1" HorizontalAlignment="Right">
+                        <Button
+                            Margin="20px"
+                            Command="{Binding RegisterTabPrev}"
+                            Style="{StaticResource MaterialDesignOutlinedButton}">
+                            ← Quay lại
+                        </Button>
                         <Button Command="{Binding RegisterTabNext}">Tiếp tục →</Button>
                     </WrapPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="Quên mật khẩu" Name="forgetTabItem">
+            <TabItem Name="forgetTabItem" Header="Quên mật khẩu">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
@@ -76,13 +203,22 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="150px" />
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <Border CornerRadius="20" Background="White" Opacity=".9" x:Name="forgetForm" Grid.Row="2" Grid.Column="1">
-                        <StackPanel Margin="20px 20px">
+                    <Border
+                        x:Name="forgetForm"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Background="White"
+                        CornerRadius="20"
+                        Opacity=".9">
+                        <StackPanel Margin="20px,20px">
                             <TextBlock>Email đã đăng kí</TextBlock>
-                            <TextBox Margin="0px 10px" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Text="{Binding AuthData.UserNameOrEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBox
+                                Margin="0px,10px"
+                                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                Text="{Binding AuthData.UserNameOrEmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <Button Click="OpenForgetPassTab">Lấy lại mật khẩu</Button>
                         </StackPanel>
                     </Border>
