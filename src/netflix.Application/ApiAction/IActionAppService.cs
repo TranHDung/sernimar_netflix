@@ -21,6 +21,8 @@ namespace netflix.ApiAction
         public Task<List<ActionType>> GetAllActionType();
         public Task DeleteActionType(int actionTypeId);
         public Task<MediaStat> GetMediaStat();
+        public Task<List<Media>> GetPlaylistByProfileId(int profileId);
+        public Task<List<Media>> GetWatchedListByProfileId(int profileId);
     }
    
 }

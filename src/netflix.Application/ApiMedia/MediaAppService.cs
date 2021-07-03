@@ -17,9 +17,11 @@ namespace netflix.ApiGenre
     public class MediaAppService : ApplicationService, IMediaAppService
     {
         private readonly IRepository<Media> _mediaRepository;
-        public MediaAppService(IRepository<Media> mediaRepository)
+        private readonly IRepository<Entities.Action> _actionRepo;
+        public MediaAppService(IRepository<Media> mediaRepository, IRepository<Entities.Action> actionRepo)
         {
             _mediaRepository = mediaRepository;
+            _actionRepo = actionRepo;
         }
         public async Task<int> Add(Media entity)
         {
@@ -62,11 +64,11 @@ namespace netflix.ApiGenre
             }
             if (search.FromCreatedDate != null)
             {
-                query = query.Where(q => q.CreatedDate > search.FromCreatedDate);
+                query = query.Where(q => q.CreatedDate >= search.FromCreatedDate);
             }
             if (search.ToCreatedDate != null)
             {
-                query = query.Where(q => q.CreatedDate > search.ToCreatedDate);
+                query = query.Where(q => q.CreatedDate <= search.ToCreatedDate);
             }
 
             return query.ToList();
@@ -109,8 +111,8 @@ namespace netflix.ApiGenre
 
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
-            var rating = doc.QuerySelector(".AggregateRatingButton__RatingScore-sc-1il8omz-1")?.InnerText;
-            var description = doc.QuerySelector(".GenresAndPlot__TextContainerBreakpointXS_TO_M-cum89p-0")?.InnerText;
+            var rating = doc.QuerySelector(".AggregateRatingButton__RatingScore-sc-1ll29m0-1")?.InnerText;
+            var description = doc.QuerySelector(".GenresAndPlot__TextContainerBreakpointL-cum89p-4")?.InnerText;
             var name = doc.QuerySelector(".TitleHeader__TitleText-sc-1wu6n3d-0")?.InnerText;
             return new IMDBInfo 
             {
@@ -132,6 +134,37 @@ namespace netflix.ApiGenre
             entity.Type = media.Type;
             entity.Description = media.Description;
             await _mediaRepository.UpdateAsync(entity);
+        }
+
+        public async Task<SuggestVideoModel> GetSuggestMediaByProfileId(int profileId)
+        {
+            var res = new SuggestVideoModel();
+            var allVid = await _mediaRepository.GetAllListAsync();
+
+            // cac the loai
+            res.NewVideos = allVid.OrderByDescending(v => v.CreatedDate).Take(6).ToList();
+            res.ActionAndFictionVideos = allVid.Where(v => v.GenreId == 3 || v.GenreId == 4).ToList();
+            res.HistoryAndHororVideos = allVid.Where(v => v.GenreId == 1 || v.GenreId == 8).ToList();
+            res.LoveAndComedyVideos = allVid.Where(v => v.GenreId == 2 || v.GenreId == 7).ToList();
+            res.OtherVideos = allVid.Where(v => v.GenreId != 2 || v.GenreId != 7 || v.GenreId != 3 || v.GenreId != 4 || v.GenreId != 1 || v.GenreId != 8).Take(10).ToList();
+
+            //var r= await _actionRepo.GetAllListAsync();
+            
+            //var lastViewMedia = r.Where(i => i.ProfileId == profileId).OrderBy(r => r.CreatedDate).FirstOrDefault();
+            
+            //if (lastViewMedia is null) // nguoi dung chua xem video nao
+            //{
+            //    res.ThemeVideo = res.NewVideos[0];
+            //    res.ForYouVideos = res.NewVideos;
+            //}
+            //else //
+            //{
+            //    var videos = allVid.Where(v => v.GenreId == lastViewMedia.Media.GenreId).Take(6).ToList();
+            //    res.ForYouVideos = videos;
+            //    res.ThemeVideo = videos.FirstOrDefault();
+            //}
+
+            return res;
         }
     }
 }

@@ -50,10 +50,14 @@ namespace netflix.wpf.ViewModels.Admin
 
         private void getInitData()
         {
-            var Orders = getData<List<Order>>("/api/services/app/Order/GetByUserId?userId="+User.Id);
+            Orders = getData<List<Order>>("/api/services/app/Order/GetByUserId?userId=" + User.Id);
             if(Orders is null || Orders.Count == 0)
             {
                 IsEmpty = true;
+            }
+            else
+            {
+                IsEmpty = false;
             }
         }
 

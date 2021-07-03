@@ -35,17 +35,6 @@ namespace netflix.wpf.ViewModels.Client
         public IndexViewModel(Profile p)
         {
             Profile = p;
-            initTab();
-        }
-        private void initTab()
-        {
-            NavigationItems = new ObservableCollection<NavItem>();
-            var t = new TestView();
-            NavigationItems.Add(new NavItem()
-            {
-                Control = t,
-                Title = "Test"
-            });
         }
     }
     public class NavItem

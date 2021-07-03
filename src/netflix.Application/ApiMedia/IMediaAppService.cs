@@ -18,5 +18,6 @@ namespace netflix.ApiGenre
         public Task<bool> UploadMedia(IFormFile file, int mediaId);
         public Task Delete(int mediaId);
         public Task<List<Media>> Search(MediaSearchDto search);
+        public Task<SuggestVideoModel> GetSuggestMediaByProfileId(int profileId);
     }
 }

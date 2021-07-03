@@ -1,4 +1,6 @@
-﻿using System;
+﻿using netflix.Entities;
+using netflix.wpf.ViewModels.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +20,19 @@ namespace netflix.wpf.Views.Client
     /// <summary>
     /// Interaction logic for PlaylistView.xaml
     /// </summary>
-    public partial class PlaylistView : Page
+    public partial class PlaylistView : UserControl
     {
         public PlaylistView()
         {
             InitializeComponent();
+            DataContext = new PlaylistViewModel();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var b = ((Button)sender).Tag as Media;
+            var detailP = new MediaDetailView(b);
+            detailP.ShowDialog();
         }
     }
 }

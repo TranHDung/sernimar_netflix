@@ -23,11 +23,8 @@
                 Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <DataGrid
                 x:Name="dataGrid"
-                Grid.Row="1"
-                Grid.ColumnSpan="4"
                 AutoGenerateColumns="False"
-                ItemsSource="{Binding Orders}"
-                Visibility="Hidden">
+                ItemsSource="{Binding Orders}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn
                         Width="50"

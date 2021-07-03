@@ -106,6 +106,70 @@ namespace netflix.ApiAction
             return res;
         }
 
+        public async Task<List<Media>> GetPlaylistByProfileId(int profileId)
+        {
+            var res = new List<Media>();
+            // get all user action that type == 2 (add to list)
+            var allAction = _actionRepository.GetAllIncluding(i => i.Media.Genre).Where(i => i.ProfileId == profileId && i.ActionTypeId == 2).Distinct().ToList();
+            allAction.ForEach(i =>
+            {
+                var m = new Media()
+                {
+                    Id = i.Media.Id,
+                    Name = i.Media.Name,
+                    Actions = null,
+                    CreatedDate = i.Media.CreatedDate,
+                    Description = i.Media.Description,
+                    FilePath = i.Media.FilePath,
+                    Genre = new Genre()
+                    {
+                        Id = i.Media.GenreId,
+                        Name = i.Media.Genre.Name,
+                        Medias = null,
+                    },
+                    GenreId = i.Media.GenreId,
+                    IBDMLink = i.Media.IBDMLink,
+                    ImdbRating = i.Media.ImdbRating,
+                    RawName = i.Media.RawName,
+                    Type = i.Media.Type,
+                };
+                res.Add(m);
+            });
+            return res;
+        }
+
+        public async Task<List<Media>> GetWatchedListByProfileId(int profileId)
+        {
+            var res = new List<Media>();
+            // get all user action that type == 2 (add to list)
+            var allAction = _actionRepository.GetAllIncluding(i => i.Media.Genre).Where(i => i.ProfileId == profileId && i.ActionTypeId == 1).Distinct().ToList();
+            allAction.ForEach(i =>
+            {
+                var m = new Media()
+                {
+                    Id = i.Media.Id,
+                    Name = i.Media.Name,
+                    Actions = null,
+                    CreatedDate = i.Media.CreatedDate,
+                    Description = i.Media.Description,
+                    FilePath = i.Media.FilePath,
+                    Genre = new Genre()
+                    {
+                        Id = i.Media.GenreId,
+                        Name = i.Media.Genre.Name,
+                        Medias = null,
+                    },
+                    GenreId = i.Media.GenreId,
+                    IBDMLink = i.Media.IBDMLink,
+                    ImdbRating = i.Media.ImdbRating,
+                    RawName = i.Media.RawName,
+                    Type = i.Media.Type,
+                };
+                res.Add(m);
+            });
+            return res;
+        }
+
         public async Task Update(Entities.Action action)
         {
             await _actionRepository.UpdateAsync(action);

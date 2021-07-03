@@ -20,6 +20,41 @@ namespace netflix.wpf.ViewModels.Auth
         private int registerTabIndex;
         private ICommand login;
         private string rePassword;
+        private ICommand selectPlanCommand;
+        private bool isPlan1Select;
+        public bool IsPlan1Select
+        {
+            get => isPlan1Select;
+            set
+            {
+                isPlan1Select = value;
+                OnPropertyChanged();
+            }
+        }
+        public ICommand SelectPlanCommand
+        {
+            get
+            {
+                if (selectPlanCommand is null)
+                {
+                    selectPlanCommand = new RelayCommand(p => true, p => selectPlan(p));
+                }
+
+                return selectPlanCommand;
+            }
+        }
+        private void selectPlan(object p)
+        {
+            var selected = int.Parse(p.ToString());
+            if(selected == 1)
+            {
+                IsPlan1Select = true;
+            }
+            else
+            {
+                IsPlan1Select = false;
+            }
+        }
         public string RePassword
         {
             get => rePassword;
@@ -167,6 +202,7 @@ namespace netflix.wpf.ViewModels.Auth
         }
         private bool register()
         {
+            return true;
             var r = this.postData<RegisterOutput>("/api/services/app/Account/Register", RegisterModel);
             if(r is null)
             {
@@ -182,6 +218,7 @@ namespace netflix.wpf.ViewModels.Auth
             IsLoggedIn = false;
             IsAdminUser = false;
             RegisterTabIndex = 1;
+            IsPlan1Select = true;
         }
     }
 }

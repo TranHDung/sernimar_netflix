@@ -1,44 +1,87 @@
-﻿<Page x:Class="netflix.wpf.Views.Admin.OrderHistoryView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:netflix.wpf.Views.Admin" xmlns:admin="clr-namespace:netflix.wpf.ViewModels.Admin" d:DataContext="{d:DesignInstance Type=admin:OrderHistoryViewModel}"
-      mc:Ignorable="d" 
-      Title="OrderHistoryView">
+﻿<Page
+    x:Class="netflix.wpf.Views.Admin.OrderHistoryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:admin="clr-namespace:netflix.wpf.ViewModels.Admin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:netflix.wpf.Views.Admin"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="OrderHistoryView"
+    d:DataContext="{d:DesignInstance Type=admin:OrderHistoryViewModel}"
+    mc:Ignorable="d">
 
     <StackPanel Margin="5">
         <TabControl Style="{StaticResource MaterialDesignTabControl}">
             <TabItem Header="Lịch sử thanh toán">
                 <StackPanel>
-                    <TextBlock FontSize="22px" FontWeight="Light" HorizontalAlignment="Center" Margin="20" Text="Tài khoản này chưa thực hiện bất cứ giao dịch nào." Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <DataGrid x:Name="dataGrid" Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding Orders}" AutoGenerateColumns="False" Visibility="Hidden">
+                    <TextBlock
+                        Margin="20"
+                        HorizontalAlignment="Center"
+                        FontSize="22px"
+                        FontWeight="Light"
+                        Text="Tài khoản này chưa thực hiện bất cứ giao dịch nào."
+                        Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <DataGrid
+                        x:Name="dataGrid"
+                        Margin="20"
+                        AutoGenerateColumns="False"
+                        ItemsSource="{Binding Orders}">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Id" Width="50" IsReadOnly="True">
+                            <DataGridTemplateColumn
+                                Width="50"
+                                Header="Id"
+                                IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Id}"></TextBlock>
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Id}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn CanUserSort="True" SortMemberPath="CreatedDate" Header="Ngày thanh toán" Width="SizeToCells" IsReadOnly="True">
+                            <DataGridTemplateColumn
+                                Width="SizeToCells"
+                                CanUserSort="True"
+                                Header="Ngày thanh toán"
+                                IsReadOnly="True"
+                                SortMemberPath="CreatedDate">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding CreatedDate}"></TextBlock>
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding CreatedDate}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Ngày hết hạn" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="ExpireDate">
+                            <DataGridTemplateColumn
+                                Width="SizeToCells"
+                                CanUserSort="True"
+                                Header="Ngày hết hạn"
+                                IsReadOnly="True"
+                                SortMemberPath="ExpireDate">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ExpireDate}"></TextBlock>
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding ExpireDate}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Số tiền" Width="SizeToCells" IsReadOnly="True" CanUserSort="True" SortMemberPath="Price">
+                            <DataGridTemplateColumn
+                                Width="SizeToCells"
+                                CanUserSort="True"
+                                Header="Số tiền"
+                                IsReadOnly="True"
+                                SortMemberPath="Price">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Price, StringFormat={}{0:C0}}"></TextBlock>
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Price, StringFormat={}{0:C0}}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
