@@ -99,7 +99,6 @@
                             <view:PlaylistView />
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
-                    m xem
                     <mah:HamburgerMenuGlyphItem Glyph="🕮" Label="Lịch sử thanh toán">
                         <mah:HamburgerMenuGlyphItem.Tag>
                             <view:PaymentHistoryView />
