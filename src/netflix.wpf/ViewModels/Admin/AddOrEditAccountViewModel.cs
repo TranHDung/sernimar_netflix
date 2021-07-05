@@ -87,6 +87,7 @@ namespace netflix.wpf.ViewModels.Admin
                 //call edit api
                 var userDto = cast2UserDto(User);
                 userDto.Id = this.userId;
+                userDto.IsActive = true;
                 var updatedUser = putData<UserDto>("/api/services/app/User/Update", userDto);
                 
                 if (updatedUser == null)

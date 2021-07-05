@@ -39,13 +39,13 @@ namespace netflix.Authorization.Users
 
         public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed)
         {
-            CheckForTenant();
+            //CheckForTenant();
 
-            var tenant = await GetActiveTenantAsync();
+            //var tenant = await GetActiveTenantAsync();
 
             var user = new User
             {
-                TenantId = tenant.Id,
+                TenantId = 7,
                 Name = name,
                 Surname = surname,
                 EmailAddress = emailAddress,
@@ -56,27 +56,32 @@ namespace netflix.Authorization.Users
             };
 
             user.SetNormalizedNames();
-           
-            foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
+
+            var rs = await _roleManager.Roles.Where(r => r.NormalizedName=="NORMALUSER").FirstOrDefaultAsync();
+            user.Roles.Add(new UserRole(7, user.Id, rs.Id));
+
+
+
+            try
             {
-                user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
+                await _userManager.InitializeOptionsAsync(1);
+                CheckErrors(await _userManager.CreateAsync(user, plainPassword));
+                await CurrentUnitOfWork.SaveChangesAsync();
             }
+            catch (Exception e)
+            {
 
-            await _userManager.InitializeOptionsAsync(tenant.Id);
-
-            CheckErrors(await _userManager.CreateAsync(user, plainPassword));
-            await CurrentUnitOfWork.SaveChangesAsync();
-
+            }
             return user;
         }
 
-        private void CheckForTenant()
-        {
-            if (!AbpSession.TenantId.HasValue)
-            {
-                throw new InvalidOperationException("Can not register host users!");
-            }
-        }
+        //private void CheckForTenant()
+        //{
+        //    if (!AbpSession.TenantId.HasValue)
+        //    {
+        //        throw new InvalidOperationException("Can not register host users!");
+        //    }
+        //}
 
         private async Task<Tenant> GetActiveTenantAsync()
         {

@@ -24,6 +24,7 @@
         <TabControl
             Name="mainTab"
             Background="White"
+            SelectedIndex="{Binding MainTabIndex}"
             Style="{StaticResource MaterialDesignTabControl}">
             <TabItem Header="Đăng nhập">
                 <Grid>

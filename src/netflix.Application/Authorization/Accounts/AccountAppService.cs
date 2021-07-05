@@ -39,8 +39,6 @@ namespace netflix.Authorization.Accounts
         public async Task<RegisterOutput> Register(RegisterInput input)
         {
             var user = new User(); ;
-            try
-            {
 
             user = await _userRegistrationManager.RegisterAsync(
                 input.Name,
@@ -50,11 +48,6 @@ namespace netflix.Authorization.Accounts
                 input.Password,
                 true // Assumed email address is always confirmed. Change this if you want to implement email confirmation.
             );
-            }
-            catch (Exception e)
-            {
-
-            }
 
             var isEmailConfirmationRequiredForLogin = await SettingManager.GetSettingValueAsync<bool>(AbpZeroSettingNames.UserManagement.IsEmailConfirmationRequiredForLogin);
 

@@ -15,6 +15,7 @@ using netflix.Authorization.Users;
 using netflix.Editions;
 using netflix.MultiTenancy.Dto;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace netflix.MultiTenancy
 {
@@ -62,9 +63,15 @@ namespace netflix.MultiTenancy
             await _tenantManager.CreateAsync(tenant);
             await CurrentUnitOfWork.SaveChangesAsync(); // To get new tenant's id.
 
-            // Create tenant database
-            _abpZeroDbMigrator.CreateOrMigrateForTenant(tenant);
-
+            try
+            {
+                // Create tenant database
+                _abpZeroDbMigrator.CreateOrMigrateForTenant(tenant);
+            }
+            catch(Exception e)
+            {
+            }
+            
             // We are working entities of new tenant, so changing tenant filter
             using (CurrentUnitOfWork.SetTenantId(tenant.Id))
             {

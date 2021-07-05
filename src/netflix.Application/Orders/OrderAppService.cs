@@ -28,23 +28,15 @@ namespace netflix.Orders
             stat.OrderAndProfs = new List<OrderAndProf>();
 
             var allOrder = await _orderRepository.GetAllListAsync();
-            allOrder.ForEach(o =>
+            for(int i = 7; i >= 0; i --)
             {
-                var item = stat.OrderAndProfs.Where(i => i.Date == o.CreatedDate).FirstOrDefault();
-                if(item is null)
-                {
-                    var oap = new OrderAndProf()
-                    {
-                        Date = o.CreatedDate,
-                        Prof = (int)o.Price,
-                    };
-                    stat.OrderAndProfs.Add(oap);
-                }
-                else
-                {
-                    item.Prof += (int)o.Price;
-                }
-            });
+                var item = new OrderAndProf();
+                item.Date = DateTime.Today.AddDays(-i);
+
+                var x = allOrder.Where(i => i.CreatedDate == item.Date).Sum(i => i.Price);
+                item.Prof = (int)x;
+                stat.OrderAndProfs.Add(item);
+            }
             return stat;
         }
 
@@ -53,7 +45,6 @@ namespace netflix.Orders
             order.CreatedDate = DateTime.Today;
             order.ExpireDate = DateTime.Today.AddDays(30);
             order.User = null;
-            order.Price = 50000;
             try
             {
              await _orderRepository.InsertAndGetIdAsync(order);
